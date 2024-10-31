@@ -1,0 +1,43 @@
+services:
+  drill-and-practice:
+    build: drill-and-practice
+    image: drill-and-practice
+    restart: "no"
+    volumes:
+      - ./drill-and-practice/:/drill-and-practice
+      - ./drill-and-practice-cache/:/drill-and-practice-cache
+    ports:
+      - 7777:7777
+    depends_on:
+      - database
+      - flyway
+    env_file:
+      - project.env
+
+  database:
+    container_name: DAPdb-server
+    image: postgres:14.1
+    restart: "no"
+    env_file:
+        - project.env
+
+  flyway:
+    image: flyway/flyway:9.11.0-alpine
+    restart: "no"
+    depends_on:
+      - database
+    volumes:
+      - .:/flyway/sql
+    command: -connectRetries=60 -baselineOnMigrate=true migrate
+    env_file:
+      - project.env
+
+  e2e-playwright:
+    entrypoint: "/bin/true"
+    build: e2e-playwright
+    image: e2e-playwright
+    network_mode: host
+    depends_on:
+      - drill-and-practice
+    volumes:
+      - ./e2e-playwright/tests:/e2e-playwright/tests

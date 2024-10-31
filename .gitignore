@@ -1,0 +1,5 @@
+drill-and-practice-cache/deps/**
+drill-and-practice-cache/gen/**
+drill-and-practice-cache/npm/**
+drill-and-practice-cache/**
+.vscode
