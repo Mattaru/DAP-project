@@ -1,13 +1,14 @@
 import { Router } from "../deps.js";
+import * as mainController from "./controllers/mainController.js";
+import * as userController from "./controllers/userController.js";
 
-
-const hello = ({ render }) => {
-    render("main.eta");
-};
 
 const router = new Router();
 
-router.get("/", hello);
+router.get("/", mainController.viewMain);
+
+router.get("/auth/login", userController.viewLogin)
+.get("/auth/register", userController.viewRegistration);
 
 
 export { router };
