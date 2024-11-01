@@ -4,7 +4,7 @@ import * as requestUtils from "../../utils/requestUtils.js";
 import * as userService from "../../services/userService.js";
 
 
-const login = async ({ request, response, state }) => {
+const login = async ({ request, response, render, state }) => {
     const userData = await requestUtils.getUserData(request);
     const [passes, errors, user] = await dataValidUtils.userLoginValid(userData);
 
