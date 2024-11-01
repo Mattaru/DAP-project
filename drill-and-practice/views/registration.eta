@@ -1,9 +1,0 @@
-<% layout("./layouts/layout.eta") %>
-
-<form method="POST" action="">
-    <input name="email" type="email" required/>
-    <input name="password" type="password" required/>
-    <input name="verification" type="password" required/>
-    <input type="submit" value="create"/>
-    <p>If you allready have registered account, you can just <a href="/auth/login">login</a> here.</p>
-</form>

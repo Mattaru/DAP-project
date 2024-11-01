@@ -1,0 +1,19 @@
+<div>
+  <ul>
+    <li><a href="/">Main</a></li>
+    <li><a href="/topics">Topics</a></li>
+    <li><a href="/quiz">Quiz</a></li>
+  </ul>
+
+  <% if (!it.user) { %>
+  <ul>
+    <li><a href="/auth/login">login</a></li>
+    <li><a href="/auth/register">registration</a></li>
+  </ul>
+  <% } else { %>
+  <ul>
+    <li><%= it.user.email %></li>
+    <li><a href="/auth/logout">logout</a></li>
+  </ul>
+  <% } %>
+</div>

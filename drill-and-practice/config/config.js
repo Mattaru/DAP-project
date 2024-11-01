@@ -1,4 +1,4 @@
-const restrictedPaths = ["/b"];
+const restrictedPaths = ["/topics", "/quiz"];
 
 
 export { restrictedPaths };

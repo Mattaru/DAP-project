@@ -9,6 +9,7 @@
 <body>
   <div class="paper container">
 
+    <%~ includeFile("../partials/navbar.eta", it) %>
     <%~ it.body %>
 
   </div>

@@ -1,4 +1,4 @@
-const errorMiddleware = async (context, next) => {
+const errorMiddleware = async (ctx, next) => {
     try {
       await next();
     } catch (e) {

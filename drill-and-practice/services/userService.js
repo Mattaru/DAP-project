@@ -2,7 +2,7 @@ import { executeQuery } from "../database/database.js";
 
 
 const addUser = async (email, password, admin=false) => {
-    await executeQuery(`INSERT INTO user (email, password, admin) 
+    await executeQuery(`INSERT INTO users (email, password, admin) 
         VALUES ($email, $password, $admin);`, {
             email: email,
             password: password,

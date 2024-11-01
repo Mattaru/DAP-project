@@ -5,10 +5,14 @@ configure({
   views: `${Deno.cwd()}/views/`,
 });
 
-const renderMiddleware = async (context, next) => {
-  context.render = async (file, data) => {
-    context.response.headers.set("Content-Type", "text/html; charset=utf-8");
-    context.response.body = await renderFile(file, data);
+const renderMiddleware = async (ctx, next) => {
+  ctx.render = async (file, data) => {
+    if (!data) data = {};
+    
+    if (ctx.user) data.user = ctx.user;
+
+    ctx.response.headers.set("Content-Type", "text/html; charset=utf-8");
+    ctx.response.body = await renderFile(file, data);
   };
 
   await next();

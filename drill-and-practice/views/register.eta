@@ -10,9 +10,10 @@
 </ul>
 <% } %>
 
-<form method="POST" action="">
+<form method="POST" action="/auth/register">
     <input name="email" type="email" placeholder="email" value="<%= it.email ? it.email : "" %>" required/>
     <input name="password" type="password" placeholder="password" value="<%= it.password ? it.password : "" %>" required/>
-    <input type="submit" value="submit"/>
-    <p>If you have not account, then you can <a href="/auth/register">register</a> here.</p>
+    <input name="verification" type="password" placeholder="verification" value="<%= it.verification ? it.verification : "" %>" required/>
+    <input type="submit" value="create"/>
+    <p>If you allready have registered account, you can just <a href="/auth/login">login</a> here.</p>
 </form>

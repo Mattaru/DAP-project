@@ -1,11 +1,11 @@
 import { send } from "../deps.js";
 
 
-const serveStaticMiddleware = async (context, next) => {
-  if (context.request.url.pathname.startsWith("/static")) {
-    const path = context.request.url.pathname.substring(7);
+const serveStaticMiddleware = async (ctx, next) => {
+  if (ctx.request.url.pathname.startsWith("/static")) {
+    const path = ctx.request.url.pathname.substring(7);
 
-    await send(context, path, {
+    await send(ctx, path, {
       root: `${Deno.cwd()}/static`,
     });
   } else {

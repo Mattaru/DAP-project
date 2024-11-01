@@ -7,7 +7,7 @@ const userMiddleware = async (ctx, next) => {
     if (user) {
         const userFromDB = await userService.findUser(user.email);
         ctx.user = userFromDB;
-    }
+    } 
 
     await next();
 };
