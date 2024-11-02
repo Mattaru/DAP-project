@@ -8,8 +8,8 @@ const addTopic = async (userId, name) => {
     });
 };
 
-const deleteTopic = async (id) => {
-    await executeQuery(`DELETE * FROM topics WHERE id = $id`, {
+const removeTopic = async (id) => {
+    await executeQuery(`DELETE FROM topics WHERE id = $id;`, {
         id: id,
     });
 };
@@ -24,5 +24,11 @@ const findTopic = async (name) => {
     })).rows[0];
 };
 
+const findTopicById = async (id) => {
+    return (await executeQuery(`SELECT * FROM topics WHERE id = $id;`, {
+        id: id,
+    })).rows[0];
+};
 
-export { addTopic, deleteTopic, findAll, findTopic };
+
+export { addTopic, removeTopic, findAll, findTopic, findTopicById };

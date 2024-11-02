@@ -17,9 +17,25 @@ const createTopic = async ({ request, response, render, user }) => {
     }
 };
 
+const deleteTopic = async ({ params, response, user }) => {
+    const topicId = params.id;
+    const admin = user.admin;
+
+    if (admin) await topicService.removeTopic(topicId);
+
+    response.redirect("/topics");
+};
+
+const viewTopic = async ({ params, render }) => {
+    console.log(await topicService.findTopicById(params.id));
+    await render("topic.eta", {
+        topic: await topicService.findTopicById(params.id)
+    });
+};
+
 const viewTopicsList = async ({ render }) => {
     await render("topics.eta", {topics: await topicService.findAll()})
 };
 
 
-export { createTopic, viewTopicsList };
+export { createTopic, deleteTopic, viewTopic, viewTopicsList };

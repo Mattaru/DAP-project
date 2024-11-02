@@ -15,7 +15,9 @@ router.get("/auth/login", userController.viewLogin)
 .post("/auth/register", userController.registration);
 
 router.get("/topics", topicController.viewTopicsList)
-.post("/topics", topicController.createTopic);
+.post("/topics", topicController.createTopic)
+.get("/topics/:id", topicController.viewTopic)
+.post("/topics/:id/delete", topicController.deleteTopic);
 
 
 export { router };
