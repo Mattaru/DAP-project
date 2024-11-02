@@ -1,0 +1,39 @@
+<% layout("./layouts/layout.eta") %>
+
+<h4>Topics<h4>
+
+<% it.user %>
+
+<% if (it.user.admin) { %>
+    <% if (it.validationErrors) { %>
+        <ul>
+            <% Object.keys(it.validationErrors).forEach((attribute) => { %>
+                <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
+                    <li><%= err %></li>
+                <% }); %>
+            <% }); %>
+        </ul>
+    <% } %>
+
+    <form method="POST" action="/topics">
+        <input name="name" type="text" placeholder="topic name" value="<%= it.name ? it.name : `` %>" required/>
+        <input type="submit" value="create topic"/>
+    </form>
+<% } %>
+
+<% if (it.topics) { %>
+    <ul>
+        <% it.topics.forEach((topic) => { %>
+            <li>
+                <a href="/topics/<%= topic.id %>"><%= topic.name %></a>
+                <% if (it.user.admin) { %>
+                    <form method="POST" action="/topics/<%= it.id %>/delete">
+                        <input type="submit" value="delete"/>
+                    </form>
+                <% } %>
+            </li>
+        <% }); %>
+    </ul>
+<% } else { %>
+    <p>There are no topics available here yet.</p>
+<% } %>

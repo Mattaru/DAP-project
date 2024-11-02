@@ -1,5 +1,6 @@
 import { Router } from "../deps.js";
 import * as mainController from "./controllers/mainController.js";
+import * as topicController from "./controllers/topicController.js";
 import * as userController from "./controllers/userController.js";
 
 
@@ -12,6 +13,9 @@ router.get("/auth/login", userController.viewLogin)
 .get("/auth/logout", userController.logout)
 .get("/auth/register", userController.viewRegistration)
 .post("/auth/register", userController.registration);
+
+router.get("/topics", topicController.viewTopicsList)
+.post("/topics", topicController.createTopic);
 
 
 export { router };

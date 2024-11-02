@@ -1,13 +1,13 @@
 <% layout("./layouts/layout.eta") %>
 
 <% if (it.validationErrors) { %>
-<ul>
-    <% Object.keys(it.validationErrors).forEach((attribute) => { %>
-        <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
-            <li><%= err %></li>
+    <ul>
+        <% Object.keys(it.validationErrors).forEach((attribute) => { %>
+            <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
+                <li><%= err %></li>
+            <% }); %>
         <% }); %>
-    <% }); %>
-</ul>
+    </ul>
 <% } %>
 
 <form method="POST" action="">

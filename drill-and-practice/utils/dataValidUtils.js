@@ -1,6 +1,32 @@
 import { bcrypt, validasaur } from "../deps.js";
+import * as topicService from "../services/topicService.js";
 import * as userService from "../services/userService.js";
 
+
+const topicValidationRules = {
+  name: [validasaur.required, validasaur.minLength(1)],
+};
+
+const topicValid = async (topicData, admin) => {
+  let [passes, errors] = await validasaur.validate(
+    topicData,
+    topicValidationRules,
+  );
+  console.log(topicData);
+  if (!admin) {
+      errors.admin = {haveNotPermisions: "you do not permission to do this action"};
+      passes = false;
+  } else if (passes && admin) {
+    const topic = await topicService.findTopic(topicData.name);
+
+    if (topic) {
+      errors.name = {nameAlreadyExist: "a topic with the same name is already exists"};
+      passes = false;
+    }
+  }
+
+  return [passes, errors];
+};
 
 const userLoginValidationRules = {
   email: [validasaur.required, validasaur.isEmail],
@@ -33,8 +59,6 @@ const userLoginValid = async (userData) => {
     }
   }
 
-  console.log(passes, errors, user);
-
   return [passes, errors, user];
 };
 
@@ -66,4 +90,4 @@ const userRegisterValid = async (userData) => {
 };
 
 
-export { userLoginValid, userRegisterValid };
+export { topicValid, userLoginValid, userRegisterValid };

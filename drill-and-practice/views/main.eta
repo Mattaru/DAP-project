@@ -1,3 +1,4 @@
 <% layout("./layouts/layout.eta") %>
 
-<p>For the Horde!</p>
+<p>Description of the app here.</p>
+<p>The application statistics show the total number of topics, questions, and question answers (i.e. answers from users)</p>
