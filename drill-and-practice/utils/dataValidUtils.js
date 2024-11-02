@@ -3,6 +3,19 @@ import * as topicService from "../services/topicService.js";
 import * as userService from "../services/userService.js";
 
 
+const questionValidationRules = {
+  question_text: [validasaur.required, validasaur.minLength(1)],
+};
+
+const questionValid = async (questionData) => {
+  const [passes, errors] = await validasaur.validate(
+    questionData,
+    questionValidationRules
+  );
+
+  return [passes, errors];
+};
+
 const topicValidationRules = {
   name: [validasaur.required, validasaur.minLength(1)],
 };
@@ -90,4 +103,4 @@ const userRegisterValid = async (userData) => {
 };
 
 
-export { topicValid, userLoginValid, userRegisterValid };
+export { questionValid, topicValid, userLoginValid, userRegisterValid };

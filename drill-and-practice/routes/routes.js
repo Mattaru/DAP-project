@@ -1,5 +1,6 @@
 import { Router } from "../deps.js";
 import * as mainController from "./controllers/mainController.js";
+import * as questionController from "./controllers/questionController.js";
 import * as topicController from "./controllers/topicController.js";
 import * as userController from "./controllers/userController.js";
 
@@ -18,6 +19,8 @@ router.get("/topics", topicController.viewTopicsList)
 .post("/topics", topicController.createTopic)
 .get("/topics/:id", topicController.viewTopic)
 .post("/topics/:id/delete", topicController.deleteTopic);
+
+router.post("/topics/:id/questions", questionController.createQuestion);
 
 
 export { router };

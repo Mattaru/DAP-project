@@ -5,18 +5,26 @@ const requestParams = async (request, contentType) => {
     return params;
 };
 
+const getQuestionData = async (request) => {
+    const params = await requestParams(
+        request, 
+        {type: "form"}
+    );
+
+    return {
+        question_text: params.get("question_text"),
+    }
+}
+
 const getTopicData = async (request) => {
     const params = await requestParams(
         request, 
         {type: "form"}
     );
 
-    const data = {};
-
-    if (params.get("name")) 
-        data.name = params.get("name");
-
-    return data;
+    return {
+        name: params.get("name")
+    };
 };
 
 const getUserData = async (request) => {
@@ -25,17 +33,12 @@ const getUserData = async (request) => {
         {type: "form"}
     );
     
-    const data = {};
-
-    if (params.get("email")) 
-        data.email = params.get("email");
-    if (params.get("password")) 
-        data.password = params.get("password");
-    if (params.get("verification")) 
-        data.verification = params.get("verification");
-    
-    return data;
+    return {
+        email: params.get("email"),
+        password: params.get("password"),
+        verification: params.get("verification"),
+    };
 };
 
 
-export { getTopicData, getUserData };
+export { getQuestionData, getTopicData, getUserData };

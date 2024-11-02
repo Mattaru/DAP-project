@@ -34,6 +34,4 @@
             </li>
         <% }); %>
     </ul>
-<% } else { %>
-    <p>There are no topics available here yet.</p>
 <% } %>
