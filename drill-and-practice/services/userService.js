@@ -1,7 +1,7 @@
 import { executeQuery } from "../database/database.js";
 
 
-const addUser = async (email, password, admin=false) => {
+export const addUser = async (email, password, admin=false) => {
     await executeQuery(`INSERT INTO users (email, password, admin) 
         VALUES ($email, $password, $admin);`, {
             email: email,
@@ -10,11 +10,8 @@ const addUser = async (email, password, admin=false) => {
     });
 };
 
-const findUser = async (email) => {
+export const findUser = async (email) => {
     return (await executeQuery(`SELECT * FROM users WHERE email = $email`, {
         email: email
     })).rows[0];
 };
-
-
-export { addUser, findUser };

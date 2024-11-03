@@ -1,7 +1,7 @@
 import { send } from "../deps.js";
 
 
-const serveStaticMiddleware = async (ctx, next) => {
+export const serveStaticMiddleware = async (ctx, next) => {
   if (ctx.request.url.pathname.startsWith("/static")) {
     const path = ctx.request.url.pathname.substring(7);
 
@@ -12,6 +12,3 @@ const serveStaticMiddleware = async (ctx, next) => {
     await next();
   }
 };
-
-
-export { serveStaticMiddleware };

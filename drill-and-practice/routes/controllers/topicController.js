@@ -4,8 +4,8 @@ import * as dataValidUtils from "../../utils/dataValidUtils.js";
 import * as requestUtils from "../../utils/requestUtils.js";
 
 
-const createTopic = async ({ request, response, render, user }) => {
-    const topicData = await requestUtils.getTopicData(request);
+export const createTopic = async ({ request, response, render, user }) => {
+    const topicData = await requestUtils.getData(request, {type: "form"});
     const [passes, errors] = await dataValidUtils.topicValid(topicData, user.admin);
     
     if (!passes) {
@@ -19,7 +19,7 @@ const createTopic = async ({ request, response, render, user }) => {
     }
 };
 
-const deleteTopic = async ({ params, response, user }) => {
+export const deleteTopic = async ({ params, response, user }) => {
     const topicId = params.id;
     const admin = user.admin;
 
@@ -33,16 +33,13 @@ const deleteTopic = async ({ params, response, user }) => {
     response.redirect("/topics");
 };
 
-const viewTopic = async ({ params, render }) => {
+export const viewTopic = async ({ params, render }) => {
     await render("topic.eta", {
         topic: await topicService.findTopicById(params.id),
-        questions: await questionService.findAllByTopicId(params.id),
+        questions: await questionService.findAllQuestinsByTopicId(params.id),
     });
 };
 
-const viewTopicsList = async ({ render }) => {
+export const viewTopicsList = async ({ render }) => {
     await render("topics.eta", {topics: await topicService.findAll()})
 };
-
-
-export { createTopic, deleteTopic, viewTopic, viewTopicsList };

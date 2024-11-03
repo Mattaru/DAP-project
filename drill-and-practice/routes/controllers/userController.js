@@ -4,8 +4,8 @@ import * as requestUtils from "../../utils/requestUtils.js";
 import * as userService from "../../services/userService.js";
 
 
-const login = async ({ request, response, render, state }) => {
-    const userData = await requestUtils.getUserData(request);
+export const login = async ({ request, response, render, state }) => {
+    const userData = await requestUtils.getData(request, {type: "form"});
     const [passes, errors, user] = await dataValidUtils.userLoginValid(userData);
 
     if (!passes) {
@@ -19,14 +19,14 @@ const login = async ({ request, response, render, state }) => {
     }
 };
 
-const logout = async ({ response, state }) => {
+export const logout = async ({ response, state }) => {
     await state.session.deleteSession();
 
     response.redirect("/auth/login");
 };
 
-const registration = async ({ request, response, render }) => {
-    const userData = await requestUtils.getUserData(request);
+export const registration = async ({ request, response, render }) => {
+    const userData = await requestUtils.getData(request, {type: "form"});
     const [passes, errors] = await dataValidUtils.userRegisterValid(userData);
 
     if (!passes) {
@@ -42,13 +42,10 @@ const registration = async ({ request, response, render }) => {
     }
 };
 
-const viewRegistration = async ({ render }) => {
+export const viewRegistration = async ({ render }) => {
     await render("register.eta");
 };
 
-const viewLogin = async ({ render }) => {
+export const viewLogin = async ({ render }) => {
     await render("login.eta");
 };
-
-
-export { login, logout, registration, viewRegistration, viewLogin }

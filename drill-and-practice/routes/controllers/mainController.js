@@ -1,6 +1,3 @@
-const viewMain = async ({ render }) => {
+export const viewMain = async ({ render }) => {
     render("main.eta");
 };
-
-
-export { viewMain };

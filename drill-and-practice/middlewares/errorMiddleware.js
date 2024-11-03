@@ -1,4 +1,4 @@
-const errorMiddleware = async (ctx, next) => {
+export const errorMiddleware = async (ctx, next) => {
     try {
       await next();
     } catch (e) {
@@ -6,5 +6,3 @@ const errorMiddleware = async (ctx, next) => {
     }
   };
   
-  
-  export { errorMiddleware };

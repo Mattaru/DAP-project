@@ -7,7 +7,7 @@ const questionValidationRules = {
   question_text: [validasaur.required, validasaur.minLength(1)],
 };
 
-const questionValid = async (questionData) => {
+export const questionValid = async (questionData) => {
   const [passes, errors] = await validasaur.validate(
     questionData,
     questionValidationRules
@@ -20,7 +20,7 @@ const topicValidationRules = {
   name: [validasaur.required, validasaur.minLength(1)],
 };
 
-const topicValid = async (topicData, admin) => {
+export const topicValid = async (topicData, admin) => {
   let [passes, errors] = await validasaur.validate(
     topicData,
     topicValidationRules,
@@ -46,7 +46,7 @@ const userLoginValidationRules = {
   password: [validasaur.required, validasaur.minLength(4)],
 };
 
-const userLoginValid = async (userData) => {
+export const userLoginValid = async (userData) => {
   let user;
   let [passes, errors] = await validasaur.validate(
     userData,
@@ -81,7 +81,7 @@ const userRegisterValidationRules = {
   verification: [validasaur.required, validasaur.minLength(4)],
 };
 
-const userRegisterValid = async (userData) => {
+export const userRegisterValid = async (userData) => {
   let [passes, errors] = await validasaur.validate(
     userData,
     userRegisterValidationRules,
@@ -101,6 +101,3 @@ const userRegisterValid = async (userData) => {
 
   return [passes, errors];
 };
-
-
-export { questionValid, topicValid, userLoginValid, userRegisterValid };

@@ -1,7 +1,7 @@
 import * as userService from "../services/userService.js";
 
 
-const userMiddleware = async (ctx, next) => {
+export const userMiddleware = async (ctx, next) => {
     const user = ctx.state.session.get("user");
 
     if (user) {
@@ -11,6 +11,3 @@ const userMiddleware = async (ctx, next) => {
 
     await next();
 };
-
-
-export { userMiddleware };

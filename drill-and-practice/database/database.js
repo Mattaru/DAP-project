@@ -14,7 +14,7 @@ if (DATABASE_URL) {
   connectionPool = new Pool({}, CONCURRENT_CONNECTIONS, true);
 }
 
-const executeQuery = async (query, params) => {
+export const executeQuery = async (query, params) => {
   const response = {};
   let client;
 
@@ -37,6 +37,3 @@ const executeQuery = async (query, params) => {
 
   return response;
 };
-
-
-export { executeQuery };

@@ -7,7 +7,7 @@ import { userMiddleware } from "./middlewares/userMiddleware.js";
 import { router } from "./routes/routes.js";
 
 
-const app = new Application();
+export const app = new Application();
 
 app.use(Session.initMiddleware());
 app.use(errorMiddleware);
@@ -16,6 +16,3 @@ app.use(userMiddleware);
 app.use(serveStaticMiddleware);
 app.use(renderMiddleware);
 app.use(router.routes());
-
-
-export { app };

@@ -5,7 +5,7 @@ configure({
   views: `${Deno.cwd()}/views/`,
 });
 
-const renderMiddleware = async (ctx, next) => {
+export const renderMiddleware = async (ctx, next) => {
   ctx.render = async (file, data) => {
     if (!data) data = {};
     
@@ -17,6 +17,3 @@ const renderMiddleware = async (ctx, next) => {
 
   await next();
 };
-
-
-export { renderMiddleware };
