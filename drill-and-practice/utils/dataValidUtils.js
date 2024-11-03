@@ -16,6 +16,28 @@ export const questionValid = async (questionData) => {
   return [passes, errors];
 };
 
+const qOPtionValidationRules = (qOptionsData) => {
+  const rules = Object.keys(qOptionsData).reduce((acc, key) => {
+    if (key.startsWith("option_text")) {
+      acc[key] = [validasaur.required, validasaur.minLength(1)];
+    }
+    return acc;
+  }, {});
+
+  return rules;
+};
+
+export const questionOptionValid = async (qOptionsData) => {
+  const questionValidationRules = qOPtionValidationRules(qOptionsData);
+  
+  const [passes, errors] = await validasaur.validate(
+    qOptionsData,
+    questionValidationRules
+  );
+
+  return [passes, errors];
+};
+
 const topicValidationRules = {
   name: [validasaur.required, validasaur.minLength(1)],
 };
