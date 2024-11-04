@@ -16,7 +16,7 @@ export const questionValid = async (questionData) => {
   return [passes, errors];
 };
 
-export const makeArreyWihOptionsData = (qOptionsData) => {
+export const makeArreyWihtOptionsData = (qOptionsData) => {
   const arr = [];
   let index = 0;
 

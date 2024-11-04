@@ -11,17 +11,9 @@ export const addQuestionOption = async ({ params, request, response, render }) =
         qOptionsData.validationErrors = errors;
         await render("question.eta", qOptionsData);
     } else {
-        const optionsObj = dataValidUtils.makeArreyWihOptionsData(qOptionsData);
+        const optArr = dataValidUtils.makeArreyWihtOptionsData(qOptionsData);
         
-        await Promise.all(optionsObj.map(async (opt) => {
-            let is_correct = opt.is_correct ? true : false;
-            
-            await questionOptionService.addQuestionOption(
-                params.qId,
-                opt.option_text,
-                is_correct,
-            );
-        }));
+        await questionOptionService.addMultipleQuestionOptions(params.qId, optArr);
 
         response.redirect(`/topics/${params.id}/questions/${params.qId}`);
     }
