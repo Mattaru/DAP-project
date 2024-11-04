@@ -16,6 +16,23 @@ export const questionValid = async (questionData) => {
   return [passes, errors];
 };
 
+export const makeArreyWihOptionsData = (qOptionsData) => {
+  const arr = [];
+  let index = 0;
+
+  Object.keys(qOptionsData).forEach((key) => {
+    if (key.startsWith("option_text")) {
+      arr[index] = {};
+      arr[index]['option_text'] = qOptionsData[key];
+      index++;
+    } else {
+      arr[index - 1]["is_correct"] = qOptionsData[key];
+    }
+  });
+  
+  return arr;
+};
+
 const qOPtionValidationRules = (qOptionsData) => {
   const rules = Object.keys(qOptionsData).reduce((acc, key) => {
     if (key.startsWith("option_text")) {
