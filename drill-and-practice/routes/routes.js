@@ -25,4 +25,5 @@ router.post("/topics/:id/questions", questionController.createQuestion)
 .get("/topics/:id/questions/:qId", questionController.viewQuestion)
 .post("/topics/:id/questions/:qId/delete", questionController.deleteQuestion);
 
-router.post("/topics/:id/questions/:qId/options", questOptionsController.addQuestionOption);
+router.post("/topics/:id/questions/:qId/options", questOptionsController.addQuestionOption)
+.post("/topics/:id/questions/:qId/options/:oId/delete", questOptionsController.deleteQuestionOption);

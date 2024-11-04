@@ -1,3 +1,4 @@
+import * as questionOptionService from "../../services/questionOptionService.js";
 import * as questionService from "../../services/questionService.js";
 import * as topicService from "../../services/topicService.js";
 import * as dataValidUtils from "../../utils/dataValidUtils.js";
@@ -20,12 +21,8 @@ export const createTopic = async ({ request, response, render, user }) => {
 };
 
 export const deleteTopic = async ({ params, response, user }) => {
-    const topicId = params.id;
-    const admin = user.admin;
-
-    if (admin) {
-        await questionService.removeQuestionsByTopicId(topicId);
-        await topicService.removeTopic(topicId);
+    if (user.admin) {
+        await topicService.removeTopic(params.id);
     } else {
         response.body = "You do not have permissions for this action."
     }

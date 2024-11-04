@@ -25,8 +25,8 @@ export const createQuestion = async ({ params, request, response, render, user }
 
 export const deleteQuestion = async ({ params, response }) => {
     const options = await questionOptionService.findAllByQuestionId(params.qId);
-
-    if (options.lenght < 1) await questionService.removeQuestionById(params.qId);
+    
+    if (options.length === 0) await questionService.removeQuestionById(params.qId);
 
     response.redirect(`/topics/${params.id}`);
 };

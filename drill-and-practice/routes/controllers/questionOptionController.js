@@ -13,18 +13,22 @@ export const addQuestionOption = async ({ params, request, response, render }) =
     } else {
         const optionsObj = dataValidUtils.makeArreyWihOptionsData(qOptionsData);
         
-        optionsObj.forEach(async (opt) => {
-            let is_correct = false;
-            
-            if (opt.is_correct) is_correct = true;
+        await Promise.all(optionsObj.map(async (opt) => {
+            let is_correct = opt.is_correct ? true : false;
             
             await questionOptionService.addQuestionOption(
                 params.qId,
                 opt.option_text,
                 is_correct,
             );
-        });
+        }));
 
         response.redirect(`/topics/${params.id}/questions/${params.qId}`);
     }
+};
+
+export const deleteQuestionOption = async ({ params, response }) => {
+    await questionOptionService.removeById(params.oId);
+
+    response.redirect(`/topics/${params.id}/questions/${params.qId}`);
 };
