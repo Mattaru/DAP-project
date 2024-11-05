@@ -13,7 +13,7 @@ export const addQuestionOption = async (questionId, optionText, isCorrect) => {
 export const addMultipleQuestionOptions = async (questionId, options) => {
     const values = [];
 
-    const placeholders = options
+    const placeholder = options
         .map((opt, index) => {
             const baseIndex = index * 3;
             values.push(
@@ -27,7 +27,7 @@ export const addMultipleQuestionOptions = async (questionId, options) => {
 
     const query = `
         INSERT INTO question_answer_options (question_id, option_text, is_correct)
-        VALUES ${placeholders};
+        VALUES ${placeholder};
     `;
 
     return await executeQuery(query, values);

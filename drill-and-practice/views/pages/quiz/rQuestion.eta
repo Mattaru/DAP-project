@@ -1,0 +1,23 @@
+<% layout("./layouts/layout.eta") %>
+
+<% if (it.question) { %>
+    <h4><%= it.question.question_text %></h4>
+
+    <% if (it.question.options && it.question.options.length > 0) { %>
+        <form method="POST" action="/quiz/<%%>">
+            <ul>
+            <% it.question.options.forEach((option) => { %>
+                <li>
+                    <p><%= option.option_text %></p>
+                    <input name="<%= option.id %>" type="checkbox"/>
+                </li>
+            <% }); %>
+            </ul>
+            <input type="submit" value="Choose"/>
+        <form>
+    <% } else { %>
+        <p>Here is no answer options for this question yet.</p>
+    <% } %>
+<% } else { %>
+    <p>There are no questions yet.</p>
+<% } %>

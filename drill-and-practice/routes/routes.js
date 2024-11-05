@@ -2,6 +2,7 @@ import { Router } from "../deps.js";
 import * as mainController from "./controllers/mainController.js";
 import * as questionController from "./controllers/questionController.js";
 import * as questOptionsController from "./controllers/questionOptionController.js";
+import * as quizController from "./controllers/quizController.js";
 import * as topicController from "./controllers/topicController.js";
 import * as userController from "./controllers/userController.js";
 
@@ -27,3 +28,7 @@ router.post("/topics/:id/questions", questionController.createQuestion)
 
 router.post("/topics/:id/questions/:qId/options", questOptionsController.addQuestionOption)
 .post("/topics/:id/questions/:qId/options/:oId/delete", questOptionsController.deleteQuestionOption);
+
+router.get("/quiz", quizController.showAllTopics)
+.get("/quiz/:tId", quizController.getRandomQuestion)
+.get("/quiz/:tId/questions/:qId", quizController.showRandomQuestion);

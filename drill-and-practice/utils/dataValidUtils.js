@@ -64,7 +64,7 @@ export const topicValid = async (topicData, admin) => {
     topicData,
     topicValidationRules,
   );
-  console.log(topicData);
+  
   if (!admin) {
       errors.admin = {haveNotPermisions: "you do not permission to do this action"};
       passes = false;
