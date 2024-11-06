@@ -9,7 +9,7 @@ export const addQuestionOption = async ({ params, request, response, render }) =
     
     if (!passes) {
         qOptionsData.validationErrors = errors;
-        await render("question.eta", qOptionsData);
+        await render("./pages/questions/question.eta", qOptionsData);
     } else {
         const optArr = dataValidUtils.makeArreyWihtOptionsData(qOptionsData);
         // make max count of qOptions for creating.

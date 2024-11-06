@@ -12,7 +12,7 @@ export const createQuestion = async ({ params, request, response, render, user }
     if (!passes) {
         questionData.validationErrors = errors;
         
-        await render("topic.eta", questionData);
+        await render("./pages/topics/topic.eta", questionData);
     } else {
         await questionService.addQuestion(
             user.id,
@@ -33,7 +33,7 @@ export const deleteQuestion = async ({ params, response }) => {
 };
 
 export const viewQuestion = async ({ params, render }) => {
-    await render("question.eta", {
+    await render("./pages/questions/question.eta", {
         topic: {id: params.id},
         question: await questionService.findQuestionById(params.qId),
         options: await questionOptionService.findAllByQuestionId(params.qId),

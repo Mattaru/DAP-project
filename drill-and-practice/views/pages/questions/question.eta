@@ -1,4 +1,4 @@
-<% layout("./layouts/layout.eta") %>
+<% layout("../../layouts/layout.eta") %>
 
 <h4><%= it.question.question_text %></h4>
 

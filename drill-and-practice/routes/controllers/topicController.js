@@ -12,7 +12,7 @@ export const createTopic = async ({ request, response, render, user }) => {
     if (!passes) {
         topicData.validationErrors = errors;
         
-        await render("topics.eta", topicData);
+        await render("./pages/topics/topics.eta", topicData);
     } else {
         await topicService.addTopic(user.id, topicData.name);
 
@@ -31,12 +31,12 @@ export const deleteTopic = async ({ params, response, user }) => {
 };
 
 export const viewTopic = async ({ params, render }) => {
-    await render("topic.eta", {
+    await render("./pages/topics/topic.eta", {
         topic: await topicService.findTopicById(params.id),
         questions: await questionService.findAllQuestinsByTopicId(params.id),
     });
 };
 
 export const viewTopicsList = async ({ render }) => {
-    await render("topics.eta", {topics: await topicService.findAll()})
+    await render("./pages/topics/topics.eta", {topics: await topicService.findAll()})
 };

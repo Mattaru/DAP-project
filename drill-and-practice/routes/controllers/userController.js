@@ -31,7 +31,7 @@ export const registration = async ({ request, response, render }) => {
 
     if (!passes) {
         userData.validationErrors = errors;
-        await render("register.eta", userData);
+        await render("./pages/users/register.eta", userData);
     } else {
         await userService.addUser(
             userData.email,
@@ -43,9 +43,9 @@ export const registration = async ({ request, response, render }) => {
 };
 
 export const viewRegistration = async ({ render }) => {
-    await render("register.eta");
+    await render("./pages/users/register.eta");
 };
 
 export const viewLogin = async ({ render }) => {
-    await render("login.eta");
+    await render("./pages/users/login.eta");
 };
