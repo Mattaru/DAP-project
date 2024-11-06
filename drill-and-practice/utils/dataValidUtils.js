@@ -3,6 +3,27 @@ import * as topicService from "../services/topicService.js";
 import * as userService from "../services/userService.js";
 
 
+export const checkRightAnswers = (answerData, qestionOptions) => {
+  let passes = false;
+
+  const answersIds = Object.keys(answerData).reduce((acc, key) => {
+    acc.push(Number(key));
+    return acc;
+  }, []);
+
+  const rightOptionsIds = [];
+
+  qestionOptions.forEach((option) => {
+    if (option.is_correct) rightOptionsIds.push(option.id);
+  });
+
+  const allAnswersRight = answersIds.every(element => rightOptionsIds.includes(element));
+
+  if (allAnswersRight && answersIds.length === rightOptionsIds.length) passes = true;
+
+  return [passes, answersIds];
+};
+
 const questionValidationRules = {
   question_text: [validasaur.required, validasaur.minLength(1)],
 };

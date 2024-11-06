@@ -8,6 +8,10 @@ export const addTopic = async (userId, name) => {
     });
 };
 
+export const getTopicsCount = async () => {
+    return (await executeQuery(`SELECT COUNT(*) FROM topics;`)).rows[0].count;
+};
+
 export const removeTopic = async (id) => {
     await executeQuery(`DELETE FROM topics WHERE id = $id;`, {
         id: id,

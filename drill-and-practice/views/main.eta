@@ -1,4 +1,8 @@
 <% layout("./layouts/layout.eta") %>
 
 <p>Description of the app here.</p>
-<p>The application statistics show the total number of topics, questions, and question answers (i.e. answers from users)</p>
+
+<h4>Statistic:</h4>
+<p>Toics:     <%= it.topicsCount %></p>
+<p>Questions: <%= it.questionsCount %></p>
+<p>Answers:   <%= it.answersCount %></p>

@@ -1,3 +1,23 @@
 <% layout("./layouts/layout.eta") %>
 
-Results
+<% if (it.questionNotExist) { %>
+    <p>There are no questions yet <a href="/quiz">back to topics</a>.</p>
+<% } else { %>
+    <% if (it.correct) { %>
+        <h4>Correct!</h4>
+        <a href="/quiz/<%= it.topic_id %>">next question</a>
+    <% } else { %>
+        <h4><%= it.question.question_text %></h4>
+
+        <h4>Incorrect!</h4>
+        <p>The correct options was:</p>
+        <ul>
+            <% it.question.options.forEach((option) => { %>
+                <% if (option.is_correct) { %>
+                    <li><%= option.option_text %></li>
+                <% } %>
+            <% }); %>
+        </ul>
+        <a href="/quiz/<%= it.question.topic_id %>">next question</a>
+    <% } %>
+<% } %>

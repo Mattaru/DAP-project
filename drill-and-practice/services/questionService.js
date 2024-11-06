@@ -10,6 +10,10 @@ export const addQuestion = async (userId, topicId, questionText) => {
     });
 };
 
+export const getQuestionsCount = async () => {
+    return (await executeQuery(`SELECT COUNT(*) FROM questions;`)).rows[0].count;
+};
+
 export const getRandomQuestionByTopicId = async (topicId) => {
     return (await executeQuery(`SELECT * FROM questions WHERE topic_id = $topicId 
         ORDER BY RANDOM() LIMIT 1;`, {
@@ -17,7 +21,7 @@ export const getRandomQuestionByTopicId = async (topicId) => {
         })).rows[0];
 }; 
 
-export const getRandomQuestionWithOptions = async (id) => {
+export const getQuestionWithOptionsById = async (id) => {
     return (await executeQuery(`WITH random_question AS (
             SELECT *
             FROM questions
@@ -26,16 +30,17 @@ export const getRandomQuestionWithOptions = async (id) => {
             LIMIT 1
         )
         SELECT 
-            rq.id AS question_id, 
+            rq.id,
+            rq.topic_id,
             rq.question_text,
             json_agg(json_build_object(
-                'option_id', qo.id,
+                'id', qo.id,
                 'option_text', qo.option_text,
                 'is_correct', qo.is_correct
             )) AS options
         FROM random_question rq
         JOIN question_answer_options qo ON rq.id = qo.question_id
-        GROUP BY rq.id, rq.question_text;`, {
+        GROUP BY rq.id, rq.topic_id, rq.question_text;`, {
             id: id,
         })).rows[0];
 };

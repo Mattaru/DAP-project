@@ -12,7 +12,7 @@ export const addQuestionOption = async ({ params, request, response, render }) =
         await render("question.eta", qOptionsData);
     } else {
         const optArr = dataValidUtils.makeArreyWihtOptionsData(qOptionsData);
-        
+        // make max count of qOptions for creating.
         await questionOptionService.addMultipleQuestionOptions(params.qId, optArr);
 
         response.redirect(`/topics/${params.id}/questions/${params.qId}`);

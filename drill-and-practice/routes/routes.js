@@ -29,6 +29,7 @@ router.post("/topics/:id/questions", questionController.createQuestion)
 router.post("/topics/:id/questions/:qId/options", questOptionsController.addQuestionOption)
 .post("/topics/:id/questions/:qId/options/:oId/delete", questOptionsController.deleteQuestionOption);
 
-router.get("/quiz", quizController.showAllTopics)
+router.get("/quiz", quizController.viewAllTopics)
 .get("/quiz/:tId", quizController.getRandomQuestion)
-.get("/quiz/:tId/questions/:qId", quizController.showRandomQuestion);
+.get("/quiz/:tId/questions/:qId", quizController.viewRandomQuestion)
+.post("/quiz/:tId/questions/:qId/options", quizController.checkOptions);

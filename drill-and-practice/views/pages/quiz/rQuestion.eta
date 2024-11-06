@@ -4,7 +4,7 @@
     <h4><%= it.question.question_text %></h4>
 
     <% if (it.question.options && it.question.options.length > 0) { %>
-        <form method="POST" action="/quiz/<%%>">
+        <form method="POST" action="/quiz/<%= it.question.topic_id %>/questions/<%= it.question.id %>/options">
             <ul>
             <% it.question.options.forEach((option) => { %>
                 <li>
@@ -18,6 +18,4 @@
     <% } else { %>
         <p>Here is no answer options for this question yet.</p>
     <% } %>
-<% } else { %>
-    <p>There are no questions yet.</p>
 <% } %>
