@@ -1,19 +1,47 @@
 <% layout("../../layouts/layout.eta") %>
 
-<% if (it.validationErrors) { %>
-    <ul>
-        <% Object.keys(it.validationErrors).forEach((attribute) => { %>
-            <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
-                <li><%= err %></li>
-            <% }); %>
-        <% }); %>
-    </ul>
-<% } %>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card p-4 shadow-sm" style="max-width: 400px; width: 100%;">
+    <h3 class="text-center mb-4">Registration</h3>
 
-<form method="POST" action="/auth/register">
-    <input name="email" type="email" placeholder="email" value="<%= it.email ? it.email : "" %>" required/>
-    <input name="password" type="password" placeholder="password" value="<%= it.password ? it.password : "" %>" required/>
-    <input name="verification" type="password" placeholder="verification" value="<%= it.verification ? it.verification : "" %>" required/>
-    <input type="submit" value="create"/>
-    <p>If you allready have registered account, you can just <a href="/auth/login">login</a> here.</p>
-</form>
+    <!-- Validation Errors -->
+    <% if (it.validationErrors) { %>
+      <div class="alert alert-danger">
+        <ul class="mb-0">
+          <% Object.keys(it.validationErrors).forEach((attribute) => { %>
+            <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
+              <li><%= err %></li>
+            <% }); %>
+          <% }); %>
+        </ul>
+      </div>
+    <% } %>
+
+    <!-- Registration Form -->
+    <form method="POST" action="/auth/register">
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input id="email" name="email" type="email" class="form-control" placeholder="Enter email" value="<%= it.email ? it.email : '' %>" required />
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input id="password" name="password" type="password" class="form-control" placeholder="Enter password" value="<%= it.password ? it.password : "" %>" required />
+      </div>
+
+      <div class="mb-3">
+        <label for="verification" class="form-label">Confirm Password</label>
+        <input id="verification" name="verification" type="password" class="form-control" placeholder="Re-enter password" value="<%= it.verification ? it.verification : "" %>" required />
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary">Create Account</button>
+      </div>
+
+      <p class="text-center mt-3">
+        Already have an account? <a href="/auth/login">Login here</a>.
+      </p>
+      <p class="text-center mt-3"><a href="/">Back</a> to main page.</p>
+    </form>
+  </div>
+</div>

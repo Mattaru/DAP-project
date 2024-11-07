@@ -3,15 +3,20 @@ document.addEventListener("DOMContentLoaded", () => {
     let qOptionsCounter = 0;
 
     const appendErrMsg = (element, msg) => {
+        const div = document.createElement("div");
         const p = document.createElement("p");
         const errMsg = document.createTextNode(msg);
 
+        div.classList.add("alert");
+        div.classList.add("alert-danger");
+
         p.appendChild(errMsg);
-        element.appendChild(p);
+        div.appendChild(p);
+        element.appendChild(div);
     };
 
     addOptionBtn.addEventListener("click", () => {
-        const optionContainer = document.getElementById("optionsContainer");
+        const optionsContainer = document.getElementById("optionsContainer");
         const errContainer = document.getElementById("errorsContainer");
         const newOption = document.createElement("div");
 
@@ -30,14 +35,21 @@ document.addEventListener("DOMContentLoaded", () => {
         qOptionsCounter++;
 
         let newOptionTemplate = `
-            <textarea name="option_text${Math.random()}" type="text" placeholder="option text" value required></textarea>
-            <label for="is_correct${Math.random()}">mark as correct</label>
-            <input name="is_correct${Math.random()}" type="checkbox"/>
-            <button type="button">delete</button>
+            <div class="mb-3">
+                <label for="option_text${Math.random()}" class="form-label">Option Text</label>
+                <textarea id="option_text" name="option_text${Math.random()}" class="form-control" placeholder="Enter option text" required></textarea>
+            </div>
+            <div class="form-check mb-3">
+                <input id="is_correct" name="is_correct${Math.random()}" type="checkbox" class="form-check-input">
+                <label for="is_correct${Math.random()}" class="form-check-label">Mark as Correct</label>
+            </div>
+            <div class="mb-3">
+                <button type="button" class="btn btn-danger btn-sm">remove option</button>
+            </div>
         `;
 
         newOption.innerHTML = newOptionTemplate;
-        optionContainer.appendChild(newOption);
+        optionsContainer.appendChild(newOption);
 
         const deleteButton = newOption.querySelector("button");
         deleteButton.addEventListener("click", () => {

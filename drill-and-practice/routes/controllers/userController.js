@@ -11,7 +11,7 @@ export const login = async ({ request, response, render, state }) => {
     if (!passes) {
         userData.validationErrors = errors;
 
-        await render("login.eta", userData);
+        await render("./pages/users/login.eta", userData);
     } else {
         await state.session.set("user", user);
 

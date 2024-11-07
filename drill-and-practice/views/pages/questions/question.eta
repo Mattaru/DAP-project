@@ -1,43 +1,63 @@
 <% layout("../../layouts/layout.eta") %>
 
-<h4><%= it.question.question_text %></h4>
+<%~ includeFile("../../partials/navbar.eta", it) %>
 
-<div id="errorsContainer">
-    <% if (it.validationErrors) { %>
-        <ul>
-            <% Object.keys(it.validationErrors).forEach((attribute) => { %>
-                <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
-                    <li id="errorMsg"><%= err %></li>
-                <% }); %>
+<div class="container py-5">
+  <!-- Question Title -->
+  <h4 class="mb-4"><%= it.question.question_text %></h4>
+
+  <!-- Validation Errors -->
+  <div id="errorsContainer">
+  <% if (it.validationErrors) { %>
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+        <% Object.keys(it.validationErrors).forEach((attribute) => { %>
+            <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
+                <li><%= err %></li>
             <% }); %>
+        <% }); %>
         </ul>
-    <% } %>
-</div>
-
-<form method="POST" action="/topics/<%= it.topic.id %>/questions/<%= it.question.id %>/options">
-    <div id="optionsContainer">
-        <div>
-            <textarea name="option_text" type="text" placeholder="option text" value="<%= it.option_text ? it.option_text : `` %>" required></textarea>
-            <label for="is_correct">mark as correct</label>
-            <input name="is_correct" type="checkbox"/>
-        </div>
     </div>
-    <input id="submitQOptionsBtn" type="submit" value="submit"/>
-</form>
+  <% } %>
+  </div>
 
-<button id="addOptionBtn">add answer option</button>
-
-<% if (it.options && it.options.length > 0) { %>
-    <ul>
-    <% it.options.forEach((option) => { %>
-        <li><%= option.option_text %> - correct: <%= option.is_correct %></li>
-        <form method="POST" action="/topics/<%= it.topic.id %>/questions/<%= it.question.id %>/options/<%= option.id %>/delete">
-            <input type="submit" value="delete"/>
-        </form>
-    <% }); %>
-    </ul>
-<% } else { %>
-    <form method="POST" action="/topics/<%= it.topic.id %>/questions/<%= it.question.id %>/delete">
-        <input type="submit" value="delete question"/>
+  <!-- Add Option Form -->
+  <div class="card mb-4 shadow-sm p-3">
+    <h5>Add an Answer Option</h5>
+    <form method="POST" action="/topics/<%= it.topic.id %>/questions/<%= it.question.id %>/options">
+      <div id="optionsContainer">
+        <div class="mb-3">
+            <label for="option_text" class="form-label">Option Text</label>
+            <textarea id="option_text" name="option_text" class="form-control" placeholder="Enter option text" required><%= it.option_text ? it.option_text : '' %></textarea>
+        </div>
+        <div class="form-check mb-3">
+            <input id="is_correct" name="is_correct" type="checkbox" class="form-check-input">
+            <label for="is_correct" class="form-check-label">Mark as Correct</label>
+        </div>
+      </div>
+      <button id="addOptionBtn" type="button" class="btn btn-secondary w-100 mb-2">Add Another Option</button>
+      <button type="submit" class="btn btn-primary w-100">Submit Option</button>
     </form>
-<% } %>
+  </div>
+
+  <!-- Options List -->
+  <% if (it.options && it.options.length > 0) { %>
+    <ul class="list-group">
+      <% it.options.forEach((option) => { %>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span><%= option.option_text %> - <strong><%= option.is_correct ? 'Correct' : 'Incorrect' %></strong></span>
+          <form method="POST" action="/topics/<%= it.topic.id %>/questions/<%= it.question.id %>/options/<%= option.id %>/delete" class="ms-2">
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+          </form>
+        </li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <p class="text-muted">No options available. Please add some options.</p>
+
+    <!-- Delete Question Button -->
+    <form method="POST" action="/topics/<%= it.topic.id %>/questions/<%= it.question.id %>/delete" class="mt-4">
+        <button type="submit" class="btn btn-danger">Delete Question</button>
+    </form>
+  <% } %>
+</div>

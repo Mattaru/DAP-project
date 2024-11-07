@@ -1,8 +1,23 @@
 <% layout("./layouts/layout.eta") %>
 
-<p>Description of the app here.</p>
+<%~ includeFile("./partials/navbar.eta", it) %>
 
-<h4>Statistic:</h4>
-<p>Toics:     <%= it.topicsCount %></p>
-<p>Questions: <%= it.questionsCount %></p>
-<p>Answers:   <%= it.answersCount %></p>
+<main class="my-4">
+    <div class="card shadow-sm p-4 bg-white rounded">
+    <p class="lead">Description of the app here.</p>
+
+    <h4 class="mb-3">Statistics:</h4>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+        Topics: <span class="badge bg-primary rounded-pill"><%= it.topicsCount %></span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+        Questions: <span class="badge bg-success rounded-pill"><%= it.questionsCount %></span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+        Answers: <span class="badge bg-warning rounded-pill"><%= it.answersCount %></span>
+        </li>
+    </ul>
+    </div>
+</main>
+  

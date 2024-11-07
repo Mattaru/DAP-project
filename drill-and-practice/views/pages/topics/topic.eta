@@ -1,26 +1,46 @@
 <% layout("../../layouts/layout.eta") %>
 
-<h4><%= it.topic.name %></h4>
+<%~ includeFile("../../partials/navbar.eta", it) %>
 
-<% if (it.validationErrors) { %>
-    <ul>
+<div class="container py-5">
+  <!-- Topic Title -->
+  <h4 class="mb-4"><%= it.topic.name %></h4>
+
+  <!-- Validation Errors -->
+  <% if (it.validationErrors) { %>
+    <div class="alert alert-danger">
+      <ul class="mb-0">
         <% Object.keys(it.validationErrors).forEach((attribute) => { %>
-            <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
-                <li><%= err %></li>
-            <% }); %>
+          <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
+            <li><%= err %></li>
+          <% }); %>
         <% }); %>
-    </ul>
-<% } %>
+      </ul>
+    </div>
+  <% } %>
 
-<form method="POST" action="/topics/<%= it.topic.id %>/questions">
-    <textarea name="question_text" type="text" placeholder="question text" value="<%= it.question_text ? it.question_text : `` %>" required></textarea>
-    <input type="submit" value="ask question"/>
-<form>
+  <!-- Ask Question Form -->
+  <div class="card mb-4 shadow-sm p-3">
+    <h5>Ask a Question</h5>
+    <form method="POST" action="/topics/<%= it.topic.id %>/questions">
+      <div class="mb-3">
+        <label for="question_text" class="form-label">Question</label>
+        <textarea id="question_text" name="question_text" class="form-control" placeholder="Enter your question" required><%= it.question_text ? it.question_text : '' %></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Ask Question</button>
+    </form>
+  </div>
 
-<% if (it.questions) { %>
-    <ul>
-    <% it.questions.forEach((question) => { %>
-        <li><a href="/topics/<%= it.topic.id %>/questions/<%= question.id %>"><%= question.question_text %></a></li>
-    <% }); %>
+  <!-- Questions List -->
+  <% if (it.questions && it.questions.length > 0) { %>
+    <ul class="list-group">
+      <% it.questions.forEach((question) => { %>
+        <li class="list-group-item">
+          <a href="/topics/<%= it.topic.id %>/questions/<%= question.id %>" class="text-decoration-none"><%= question.question_text %></a>
+        </li>
+      <% }); %>
     </ul>
-<% } %>
+  <% } else { %>
+    <p class="text-muted">No questions available yet. Be the first to ask a question!</p>
+  <% } %>
+</div>

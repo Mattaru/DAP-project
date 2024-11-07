@@ -1,37 +1,52 @@
 <% layout("../../layouts/layout.eta") %>
 
-<h4>Topics<h4>
+<%~ includeFile("../../partials/navbar.eta", it) %>
 
-<% it.user %>
+<div class="container py-5">
+  <h4 class="mb-4">Topics</h4>
 
-<% if (it.user.admin) { %>
+  <% if (it.user && it.user.admin) { %>
+    <!-- Validation Errors -->
     <% if (it.validationErrors) { %>
-        <ul>
-            <% Object.keys(it.validationErrors).forEach((attribute) => { %>
-                <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
-                    <li><%= err %></li>
-                <% }); %>
+      <div class="alert alert-danger">
+        <ul class="mb-0">
+          <% Object.keys(it.validationErrors).forEach((attribute) => { %>
+            <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
+              <li><%= err %></li>
             <% }); %>
+          <% }); %>
         </ul>
+      </div>
     <% } %>
 
-    <form method="POST" action="/topics">
-        <input name="name" type="text" placeholder="topic name" value="<%= it.name ? it.name : `` %>" required/>
-        <input type="submit" value="create topic"/>
-    </form>
-<% } %>
+    <!-- Create Topic Form -->
+    <div class="card mb-4 shadow-sm p-3">
+      <h5>Create a New Topic</h5>
+      <form method="POST" action="/topics">
+        <div class="mb-3">
+          <label for="name" class="form-label">Topic Name</label>
+          <input id="name" name="name" type="text" class="form-control" placeholder="Enter topic name" value="<%= it.name ? it.name : '' %>" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Create Topic</button>
+      </form>
+    </div>
+  <% } %>
 
-<% if (it.topics) { %>
-    <ul>
-        <% it.topics.forEach((topic) => { %>
-            <li>
-                <a href="/topics/<%= topic.id %>"><%= topic.name %></a>
-                <% if (it.user.admin) { %>
-                    <form method="POST" action="/topics/<%= topic.id %>/delete">
-                        <input type="submit" value="delete"/>
-                    </form>
-                <% } %>
-            </li>
-        <% }); %>
+  <!-- Topics List -->
+  <% if (it.topics && it.topics.length > 0) { %>
+    <ul class="list-group">
+      <% it.topics.forEach((topic) => { %>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="/topics/<%= topic.id %>" class="text-decoration-none"><%= topic.name %></a>
+          <% if (it.user && it.user.admin) { %>
+            <form method="POST" action="/topics/<%= topic.id %>/delete" class="ms-2">
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+          <% } %>
+        </li>
+      <% }); %>
     </ul>
-<% } %>
+  <% } else { %>
+    <p class="text-muted">No topics available.</p>
+  <% } %>
+</div>
