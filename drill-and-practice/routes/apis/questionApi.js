@@ -21,8 +21,8 @@ export const checkAnswer = async ({ request, response }) => {
 
 export const reciveRandomQuestion = async ({ response }) => {
     const rQuestion = await questionService.getRandomQuestion();
-
-    if (!rQuestion) {
+    
+    if (rQuestion) {
         const rdyObj = apiUtils.qObjKeysToCamelCase(rQuestion);
     
         response.body = rdyObj;
