@@ -14,6 +14,25 @@ export const getQuestionsCount = async () => {
     return (await executeQuery(`SELECT COUNT(*) FROM questions;`)).rows[0].count;
 };
 
+export const getRandomQuestion = async () => {
+    return (await executeQuery(`WITH random_question AS (
+        SELECT *
+        FROM questions
+        ORDER BY RANDOM()
+        LIMIT 1
+    )
+    SELECT 
+        rq.id as questionId,
+        rq.question_text as questionText,
+        json_agg(json_build_object(
+            'optionId', qo.id,
+            'optionText', qo.option_text
+        )) AS answerOptions
+    FROM random_question rq
+    JOIN question_answer_options qo ON rq.id = qo.question_id
+    GROUP BY rq.id, rq.question_text;`)).rows[0];
+};
+
 export const getRandomQuestionByTopicId = async (topicId) => {
     return (await executeQuery(`SELECT * FROM questions WHERE topic_id = $topicId 
         ORDER BY RANDOM() LIMIT 1;`, {

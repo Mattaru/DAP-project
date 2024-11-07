@@ -9,11 +9,11 @@ export const checkOptions = async ({ params, request, render, user }) => {
     const answerData = await requestUtils.getData(request);
     const question = await questionService.getQuestionWithOptionsById(params.qId);
     
-    const [passes, answersIds] = dataValidUtils.checkRightAnswers(answerData, question.options);
+    const [answerIsRight, answersIds] = dataValidUtils.checkRightAnswers(answerData, question.options);
     
     await answerService.addAnswer(user.id, question.id, answersIds);
 
-    if (passes) await render("/pages/quiz/results.eta", { 
+    if (answerIsRight) await render("/pages/quiz/results.eta", { 
         correct: true,
         topic_id: question.topic_id,
      });

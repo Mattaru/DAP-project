@@ -1,4 +1,5 @@
 import { Router } from "../deps.js";
+import * as questionApi from "./apis/questionApi.js";
 import * as mainController from "./controllers/mainController.js";
 import * as questionController from "./controllers/questionController.js";
 import * as questOptionsController from "./controllers/questionOptionController.js";
@@ -33,3 +34,6 @@ router.get("/quiz", quizController.viewAllTopics)
 .get("/quiz/:tId", quizController.getRandomQuestion)
 .get("/quiz/:tId/questions/:qId", quizController.viewRandomQuestion)
 .post("/quiz/:tId/questions/:qId/options", quizController.checkOptions);
+
+router.get("/api/questions/random", questionApi.reciveRandomQuestion)
+.post("/api/questions/answer", questionApi.checkAnswer);

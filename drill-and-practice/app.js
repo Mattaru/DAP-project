@@ -1,4 +1,5 @@
-import { Application, Session } from "./deps.js";
+import { Application, oakCors, Session } from "./deps.js";
+import * as config from "./config/config.js";
 import { authMiddleware } from "./middlewares/authMiddleware.js";
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 import { renderMiddleware } from "./middlewares/renderMiddleware.js";
@@ -8,6 +9,8 @@ import { router } from "./routes/routes.js";
 
 
 export const app = new Application();
+
+app.use(oakCors(config.corsOptions));
 
 app.use(Session.initMiddleware());
 app.use(errorMiddleware);
