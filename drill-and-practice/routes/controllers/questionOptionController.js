@@ -12,7 +12,9 @@ export const addQuestionOption = async ({ params, request, response, render }) =
         await render("./pages/questions/question.eta", qOptionsData);
     } else {
         const optArr = dataValidUtils.makeArreyWihtOptionsData(qOptionsData);
-        // make max count of qOptions for creating.
+        
+        if (optArr.length > 10) response.body = "You can't add mothen 10 answer options in one time."
+
         await questionOptionService.addMultipleQuestionOptions(params.qId, optArr);
 
         response.redirect(`/topics/${params.id}/questions/${params.qId}`);

@@ -1,7 +1,7 @@
 // Here you can setup restrictions for your routes.
 export const restrictedPaths = [
     "/topics",
-     "/quiz"
+    "/quiz",
 ];
 
 // API
