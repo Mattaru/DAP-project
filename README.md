@@ -71,7 +71,7 @@ The application will be available at http://localhost:7777.
 
 ## API Endpoints
 
-- GET /api/questions/random
+- GET `/api/questions/random`
 Returns a randomly selected question.
 Response Example:
 ```json
@@ -85,7 +85,7 @@ Response Example:
   ]
 }
 ```
-- POST /api/questions/answer
+- POST `/api/questions/answer`
 Verifies the answer provided by the user.
 Request Example:
 ```json
@@ -102,8 +102,8 @@ Response Example:
 ## Admin Account
 
 The database comes preloaded with an admin account:
-- Email: admin@admin.com
-- Password: 123456
+- Email: `admin@admin.com`
+- Password: `123456`
 
 ## Usage
 
