@@ -11,7 +11,7 @@ This is a web application for repeated practice of learned content through multi
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Project Structure](#project-structure)
-- [Database Schema](#database-schema)
+- [Configurations](#configurations)
 - [Installation](#installation)
 - [API Endpoints](#api-endpoints)
 - [Admin account](#admin-account)
@@ -49,9 +49,13 @@ This project is a web application built using a three-tier architecture (client,
 
 The project follows a modular structure:
 - **controllers/**: Handles request and response logic.
-- **services/**: Business logic and operations.
-- **database/**: Database queries and connection handling.
+- **services/**: Database queries.
+- **database/**: Connection handling.
 - **views/**: Templates and rendering logic.
+
+## Configurations
+
+--- Not ready yet ---
 
 ## Installation
 
