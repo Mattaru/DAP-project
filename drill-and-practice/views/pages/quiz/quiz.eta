@@ -1,9 +1,20 @@
 <% layout("./layouts/layout.eta") %>
 
-<% if (it.topics && it.topics.length > 0) { %>
-    <ul>
-        <% it.topics.forEach((topic) => { %>
-            <li><a href="/quiz/<%= topic.id %>"><%= topic.name %></a></li>
-        <% }); %>
-    </ul>
-<% } %>
+<%~ includeFile("./partials/navbar.eta", it) %>
+
+<div class="container py-5">
+  <h4 class="mb-4">Available Quizzes</h4>
+
+  <% if (it.topics && it.topics.length > 0) { %>
+    <div class="list-group">
+      <% it.topics.forEach((topic) => { %>
+        <a href="/quiz/<%= topic.id %>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <span><%= topic.name %></span>
+          <span class="badge bg-primary rounded-pill">Start Quiz</span>
+        </a>
+      <% }); %>
+    </div>
+  <% } else { %>
+    <p class="text-muted">No quizzes available at the moment. Please check back later.</p>
+  <% } %>
+</div>
