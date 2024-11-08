@@ -4,7 +4,34 @@
 
 <main class="my-4">
     <div class="card shadow-sm p-4 bg-white rounded">
-    <p class="lead">Description of the app here.</p>
+    <h4>About app</h4>
+    <p class="lead">
+    This is a web application for repeated practice of learned content through multiple-choice questions. 
+    The application allows users to create topics and add questions with multiple answer options. 
+    Users can also answer questions and view statistics. 
+    The application provides an API for retrieving random questions and verifying answers.
+    </p>
+    <br/>
+    <h4>Features</h4>
+    <ul>
+        <li class="lead">User registration and login with secure password storage using bcrypt.</li>
+        <li class="lead">Admin users can create and delete topics.</li>
+        <li class="lead">Users can add questions to topics with multiple answer options.</li>
+        <li class="lead">Users can answer questions and view feedback on their answers.</li>
+        <li class="lead">API for retrieving random questions and verifying answers.</li>
+        <li class="lead">Automated tests, including end-to-end tests with Playwright.</li>
+        <li class="lead">Cross-origin resource sharing (CORS) support for the API.</li>
+        <li class="lead">Styled using a Bootstrap CDN.</li>
+    </ul>
+    <br/>
+    <h4>Overview</h4>
+    <p class="lead">This project is a web application built using a three-tier architecture 
+    (client, server, database) and a layered architecture (views, controllers, services, database). 
+    It is developed with <strong>Deno</strong> and <strong>Oak</strong> framework. The application uses <strong>PostgreSQL</strong> as 
+    the database and <strong>Flyway</strong> for database migrations.</p>
+
+    <br/>
+    <br/>
 
     <h4 class="mb-3">Statistics:</h4>
     <ul class="list-group list-group-flush">
