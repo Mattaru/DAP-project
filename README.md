@@ -13,12 +13,11 @@ This is a web application for repeated practice of learned content through multi
 - [Project Structure](#project-structure)
 - [Database Schema](#database-schema)
 - [Installation](#installation)
-- [Running the Application](#running-the-application)
 - [API Endpoints](#api-endpoints)
+- [Admin account](#admin-account)
+- [Usage](#usage)
 - [Testing](#testing)
 - [Deployment](#deployment)
-- [Usage](#usage)
-- [Known Issues](#known-issues)
 
 ## Overview
 
@@ -44,7 +43,7 @@ This project is a web application built using a three-tier architecture (client,
 - [Bcrypt](https://deno.land/x/bcrypt)
 - [Docker Compose](https://docs.docker.com/compose/)
 - [Playwright](https://playwright.dev/) for testing
-- [Bootstrap5] (https://getbootstrap.com/) css framework
+- [Bootstrap5](https://getbootstrap.com/) css framework
 
 ## Project Structure
 
@@ -113,11 +112,10 @@ The database comes preloaded with an admin account:
 - Quiz Page: Users can take a quiz by selecting a topic and answering questions.
 - API: Developers can use the API to retrieve random questions and verify answers.
 
-## Tests
+## Testing
 
 --- Not ready yet ---
 
 ## Deployment
 
 --- Not ready yet ---
-
