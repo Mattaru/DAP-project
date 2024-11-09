@@ -33,3 +33,10 @@ CREATE TABLE question_answers (
 );
 
 CREATE UNIQUE INDEX ON users((lower(email)));
+
+INSERT INTO users (email, admin, password)
+VALUES (
+  'admin@admin.com',
+  TRUE,
+  '$2a$10$o73rxbG74kNYNF0Wxgy4cOsSLm2Oi/P01dbTptS02rmyecmxTnGhu'
+);

@@ -19,7 +19,7 @@ services:
     image: postgres:14.1
     restart: "no"
     env_file:
-        - project.env
+      - project.env
 
   flyway:
     image: flyway/flyway:9.11.0-alpine
@@ -28,10 +28,12 @@ services:
       - database
     volumes:
       - .:/flyway/sql
-    command: -connectRetries=60 -baselineOnMigrate=true migrate
+    command: 
+      -connectRetries=60 
+      -baselineOnMigrate=true migrate
     env_file:
       - project.env
-
+    
   e2e-playwright:
     entrypoint: "/bin/true"
     build: e2e-playwright

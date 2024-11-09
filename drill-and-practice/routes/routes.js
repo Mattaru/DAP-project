@@ -10,8 +10,6 @@ import * as userController from "./controllers/userController.js";
 
 export const router = new Router();
 
-router.use(apiRouter.routes());
-
 router
 .get("/", mainController.viewMain);
 
@@ -42,3 +40,6 @@ router
 .get("/quiz/:tId", quizController.getRandomQuestion)
 .get("/quiz/:tId/questions/:qId", quizController.viewRandomQuestion)
 .post("/quiz/:tId/questions/:qId/options", quizController.checkOptions);
+
+// Connect for the APIs routes
+router.use(apiRouter.routes());
