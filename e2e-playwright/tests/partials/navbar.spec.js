@@ -3,7 +3,7 @@ import * as userUtils from "../testingUtils/userUtils.js";
 
 
 test.describe("Navbar.", () => {
-  const baseUrl = "http://localhost:7777"; 
+  const baseUrl = "http://host.docker.internal:7777"; 
 
   test.beforeEach(async ({ page }) => {
     await page.goto(baseUrl);
@@ -65,7 +65,10 @@ test.describe("Navbar.", () => {
   });
 
   test("Display user email and logout link when user is authenticated.", async ({ page }) => {
-    await userUtils.loginAsUser(page, {email: "admin@admin.com", password: "123456"});
+    await userUtils.loginAsUser(page, baseUrl, {
+      email: "admin@admin.com",
+      password: "123456"
+    });
 
     await page.goto(`${baseUrl}/`);
     await page.reload();
@@ -84,7 +87,10 @@ test.describe("Navbar.", () => {
   });
 
   test("Follow each navigation link as authenticated user.", async ({ page }) => {
-    await userUtils.loginAsUser(page, {email: "admin@admin.com", password: "123456"});
+    await userUtils.loginAsUser(page, baseUrl, {
+      email: "admin@admin.com",
+      password: "123456"
+    });
 
     await page.click("a.nav-link:text('Main')");
     await expect(page).toHaveURL(`${baseUrl}/`);

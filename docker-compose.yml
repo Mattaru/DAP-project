@@ -13,13 +13,19 @@ services:
       - flyway
     env_file:
       - project.env
+    networks:
+      - DAPnetwork
 
   database:
     container_name: DAPdb-server
     image: postgres:14.1
     restart: "no"
+    ports:
+      - 5432:5432
     env_file:
       - project.env
+    networks:
+      - DAPnetwork
 
   flyway:
     image: flyway/flyway:9.11.0-alpine
@@ -33,13 +39,22 @@ services:
       -baselineOnMigrate=true migrate
     env_file:
       - project.env
+    networks:
+      - DAPnetwork
     
   e2e-playwright:
     entrypoint: "/bin/true"
     build: e2e-playwright
     image: e2e-playwright
-    network_mode: host
     depends_on:
       - drill-and-practice
     volumes:
       - ./e2e-playwright/tests:/e2e-playwright/tests
+    env_file:
+      - project.env
+    networks:
+      - DAPnetwork
+
+networks:
+  DAPnetwork:
+    driver: bridge

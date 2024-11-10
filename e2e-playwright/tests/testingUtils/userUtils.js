@@ -1,5 +1,5 @@
-export const loginAsUser = async (page, user) => {
-    await page.goto('http://localhost:7777/auth/login');
+export const loginAsUser = async (page, baseUrl, user) => {
+    await page.goto(`${baseUrl}/auth/login`);
   
     await page.fill('input[name="email"]', user.email);
     await page.fill('input[name="password"]', user.password);
