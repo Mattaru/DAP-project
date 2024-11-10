@@ -22,9 +22,7 @@ export const executeQuery = async (query, params) => {
     client = await connectionPool.connect();
     const result = await client.queryObject(query, params);
 
-    if (result.rows) {
-      response.rows = result.rows;
-    }
+    if (result.rows) response.rows = result.rows;
   } catch (e) {
     response.error = e;
   } finally {

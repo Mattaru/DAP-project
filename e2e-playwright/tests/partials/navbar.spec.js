@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import * as userUtils from "../utils/userUtils.js";
+import * as userUtils from "../testingUtils/userUtils.js";
 
 
 test.describe("Navbar.", () => {
@@ -67,7 +67,7 @@ test.describe("Navbar.", () => {
   test("Display user email and logout link when user is authenticated.", async ({ page }) => {
     await userUtils.loginAsUser(page, {email: "admin@admin.com", password: "123456"});
 
-    await page.goto("http://localhost:7777/");
+    await page.goto(`${baseUrl}/`);
     await page.reload();
 
     const userEmail = page.locator("span.nav-link strong");
@@ -80,7 +80,7 @@ test.describe("Navbar.", () => {
 
     await userUtils.logOut(page);
 
-    await expect(page).toHaveURL("http://localhost:7777/auth/login");
+    await expect(page).toHaveURL(`${baseUrl}/auth/login`);
   });
 
   test("Follow each navigation link as authenticated user.", async ({ page }) => {
