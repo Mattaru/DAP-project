@@ -120,6 +120,12 @@ The database comes preloaded with an admin account:
 
 --- Not ready yet ---
 
+```
+$ docker compose up -d drill-and-practice database flyway && \ 
+  docker compose run --entrypoint=npx e2e-playwright playwright test && \
+  docker compose rm -sf e2e-playwright
+```
+
 ## Deployment
 
 --- Not ready yet ---

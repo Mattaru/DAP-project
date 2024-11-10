@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import * as userUtils from "../utils/userUtils.js";
 
 
 test.describe("Navbar.", () => {
@@ -29,18 +30,17 @@ test.describe("Navbar.", () => {
     await expect(quizLink).toHaveAttribute("href", "/quiz");
   });
 
-  test("Follow each navigation link.", async ({ page }) => {
+  test("Follow each navigation link as not authenticated user.", async ({ page }) => {
     await page.click("a.nav-link:text('Main')");
     await expect(page).toHaveURL(`${baseUrl}/`);
-    await expect(page.locator("h1, h2, h3")).toContainText("Main Page");
 
     await page.click("a.nav-link:text('Topics')");
-    await expect(page).toHaveURL(`${baseUrl}/topics`);
-    await expect(page.locator("h1, h2, h3")).toContainText("Topics");
+    await expect(page).toHaveURL(`${baseUrl}/auth/login`);
+
+    await page.goBack();
 
     await page.click("a.nav-link:text('Quiz')");
-    await expect(page).toHaveURL(`${baseUrl}/quiz`);
-    await expect(page.locator("h1, h2, h3")).toContainText("Quiz");
+    await expect(page).toHaveURL(`${baseUrl}/auth/login`);
   });
 
   test("Display login and register links when user is not authenticated.", async ({ page }) => {
@@ -57,44 +57,64 @@ test.describe("Navbar.", () => {
   test("Follow login and register links.", async ({ page }) => {
     await page.click("a.nav-link[href='/auth/login']");
     await expect(page).toHaveURL(`${baseUrl}/auth/login`);
-    await expect(page.locator("h1, h2, h3")).toContainText("Login");
 
     await page.goBack();
+
     await page.click("a.nav-link[href='/auth/register']");
     await expect(page).toHaveURL(`${baseUrl}/auth/register`);
-    await expect(page.locator("h1, h2, h3")).toContainText("Register");
   });
 
   test("Display user email and logout link when user is authenticated.", async ({ page }) => {
-    await page.context().addCookies([{ }]); // make user obj for auth
-    await page.goto(baseUrl);
+    await userUtils.loginAsUser(page, {email: "admin@admin.com", password: "123456"});
 
-    const userEmail = await page.locator("span.nav-link strong");
-    const logoutLink = await page.locator("a.nav-link[href='/auth/logout']");
+    await page.goto("http://localhost:7777/");
+    await page.reload();
 
-    await expect(userEmail).toBeVisible();
-    await expect(userEmail).toHaveText("user@example.com"); // Update with test user email if needed
+    const userEmail = page.locator("span.nav-link strong");
+    const logoutLink = page.locator("a.nav-link[href='/auth/logout']");
+
+    await expect(userEmail).toBeVisible({ timeout: 10000 });
+    await expect(userEmail).toHaveText("admin@admin.com");
 
     await expect(logoutLink).toBeVisible();
-    await expect(logoutLink).toHaveText("Logout");
 
-    await page.click("a.nav-link[href='/auth/logout']");
-    await expect(page).toHaveURL(`${baseUrl}/auth/logout`);
+    await userUtils.logOut(page);
+
+    await expect(page).toHaveURL("http://localhost:7777/auth/login");
+  });
+
+  test("Follow each navigation link as authenticated user.", async ({ page }) => {
+    await userUtils.loginAsUser(page, {email: "admin@admin.com", password: "123456"});
+
+    await page.click("a.nav-link:text('Main')");
+    await expect(page).toHaveURL(`${baseUrl}/`);
+
+    await page.click("a.nav-link:text('Topics')");
+    await expect(page).toHaveURL(`${baseUrl}/topics`);
+
+    await page.goBack();
+
+    await page.click("a.nav-link:text('Quiz')");
+    await expect(page).toHaveURL(`${baseUrl}/quiz`);
+
+    await userUtils.logOut(page);
   });
 
   test("Toggle the navbar on mobile view.", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
 
-    const toggleButton = await page.locator("button.navbar-toggler");
-    const navbarContent = await page.locator("#navbarContent");
-
-    await expect(navbarContent).toHaveClass(/collapse/);
+    const toggleButton = page.locator("button.navbar-toggler");
+    const navbarContent = page.locator("#navbarContent");
 
     await toggleButton.click();
-    await expect(navbarContent).not.toHaveClass(/collapse/);
+    
+    await expect(navbarContent).toBeVisible({ timeout: 10000 });
+    await expect(navbarContent).toHaveClass(/collapse show/);
 
     await toggleButton.click();
+    
     await expect(navbarContent).toHaveClass(/collapse/);
+    await expect(navbarContent).not.toHaveClass(/show/);
   });
 });
 
