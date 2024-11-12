@@ -27,11 +27,12 @@ test.describe('Registration Page', () => {
   });
 
   test('Register successfully with valid data.', async ({ page }) => {
-    const randomEmail = `user${Date.now()}@example.com`;
+    const randomEmail = `${Math.random()}@test.com`;
 
     await page.fill('input[name="email"]', randomEmail);
     await page.fill('input[name="password"]', 'password123');
     await page.fill('input[name="verification"]', 'password123');
+    
     await page.click('button[type="submit"]');
 
     await expect(page).toHaveURL("/auth/login");

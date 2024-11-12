@@ -10,3 +10,13 @@ export const loginAsUser = async (page, user) => {
 export const logOut = async (page) => {
     await page.click("a.nav-link[href='/auth/logout']");
 };
+
+export const registerNewUser = async (page, email, password) => {
+    await page.goto("/auth/register");
+
+    await page.fill('input[name="email"]', email);
+    await page.fill('input[name="password"]', password);
+    await page.fill('input[name="verification"]', password);
+
+    await page.click('button[type="submit"]');
+};

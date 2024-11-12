@@ -7,6 +7,7 @@ test.describe('Topics Page.', () => {
   const testData = {
     email: "test@test.com",
     password: 1234,
+    randomTopicName: `Topic ${Math.random()}`
   }
 
   test.beforeEach(async ({ page }) => {
@@ -26,35 +27,29 @@ test.describe('Topics Page.', () => {
     const topicsList = page.locator('.list-group');
     const emptyMessage = page.locator('text=No topics available.');
 
-    if (await topicsList.count() > 0) {
+    if (await topicsList.count() > 0) 
       await expect(topicsList).toBeVisible();
-    } else {
+    else 
       await expect(emptyMessage).toBeVisible();
-    }
   });
 
   test('Admin should be able to create a new topic.', async ({ page }) => {
     const createForm = page.locator('form[action="/topics"]');
     await expect(createForm).toBeVisible();
 
-    const randomTopicName = `Topic ${Date.now()}`;
-    await page.fill('input[name="name"]', randomTopicName);
+    await page.fill('input[name="name"]', testData.randomTopicName);
     await page.click('button[type="submit"]:has-text("Create topic")');
 
-    await expect(page.locator(`.list-group-item a:text("${randomTopicName}")`)).toBeVisible();
+    await expect(page.locator(`.list-group-item a:text("${testData.randomTopicName}")`)).toBeVisible();
   });
 
   test('Admin should be able to delete a topic.', async ({ page }) => {
-    const topicName = `Topic ${Date.now()}`;
-    await page.fill('input[name="name"]', topicName);
-    await page.click('button[type="submit"]');
-
-    const topicLocator = page.locator(`.list-group-item:has-text("${topicName}")`);
+    const topicLocator = page.locator(`.list-group-item:has-text("${testData.randomTopicName}")`);
     await expect(topicLocator).toBeVisible();
 
     await topicLocator.locator('button[type="submit"]:has-text("Delete")').click();
 
-    await expect(page.locator(`.list-group-item:has-text("${topicName}")`)).not.toBeVisible();
+    await expect(page.locator(`.list-group-item:has-text("${testData.randomTopicName}")`)).not.toBeVisible();
   });
 
   test('Regular user should not see the create topic form.', async ({ page }) => {
