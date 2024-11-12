@@ -3,10 +3,8 @@ import * as userUtils from "../testingUtils/userUtils.js";
 
 
 test.describe("Navbar.", () => {
-  const baseUrl = "http://host.docker.internal:7777"; 
-
   test.beforeEach(async ({ page }) => {
-    await page.goto(baseUrl);
+    await page.goto("/");
   });
 
   test("Display the brand logo.", async ({ page }) => {
@@ -32,15 +30,15 @@ test.describe("Navbar.", () => {
 
   test("Follow each navigation link as not authenticated user.", async ({ page }) => {
     await page.click("a.nav-link:text('Main')");
-    await expect(page).toHaveURL(`${baseUrl}/`);
+    await expect(page).toHaveURL("/");
 
     await page.click("a.nav-link:text('Topics')");
-    await expect(page).toHaveURL(`${baseUrl}/auth/login`);
+    await expect(page).toHaveURL("/auth/login");
 
     await page.goBack();
 
     await page.click("a.nav-link:text('Quiz')");
-    await expect(page).toHaveURL(`${baseUrl}/auth/login`);
+    await expect(page).toHaveURL("/auth/login");
   });
 
   test("Display login and register links when user is not authenticated.", async ({ page }) => {
@@ -56,21 +54,21 @@ test.describe("Navbar.", () => {
 
   test("Follow login and register links.", async ({ page }) => {
     await page.click("a.nav-link[href='/auth/login']");
-    await expect(page).toHaveURL(`${baseUrl}/auth/login`);
+    await expect(page).toHaveURL("/auth/login");
 
     await page.goBack();
 
     await page.click("a.nav-link[href='/auth/register']");
-    await expect(page).toHaveURL(`${baseUrl}/auth/register`);
+    await expect(page).toHaveURL("/auth/register");
   });
 
   test("Display user email and logout link when user is authenticated.", async ({ page }) => {
-    await userUtils.loginAsUser(page, baseUrl, {
+    await userUtils.loginAsUser(page, {
       email: "admin@admin.com",
       password: "123456"
     });
 
-    await page.goto(`${baseUrl}/`);
+    await page.goto("/");
     await page.reload();
 
     const userEmail = page.locator("span.nav-link strong");
@@ -83,25 +81,25 @@ test.describe("Navbar.", () => {
 
     await userUtils.logOut(page);
 
-    await expect(page).toHaveURL(`${baseUrl}/auth/login`);
+    await expect(page).toHaveURL("/auth/login");
   });
 
   test("Follow each navigation link as authenticated user.", async ({ page }) => {
-    await userUtils.loginAsUser(page, baseUrl, {
+    await userUtils.loginAsUser(page, {
       email: "admin@admin.com",
       password: "123456"
     });
 
     await page.click("a.nav-link:text('Main')");
-    await expect(page).toHaveURL(`${baseUrl}/`);
+    await expect(page).toHaveURL("/");
 
     await page.click("a.nav-link:text('Topics')");
-    await expect(page).toHaveURL(`${baseUrl}/topics`);
+    await expect(page).toHaveURL("/topics");
 
     await page.goBack();
 
     await page.click("a.nav-link:text('Quiz')");
-    await expect(page).toHaveURL(`${baseUrl}/quiz`);
+    await expect(page).toHaveURL("/quiz");
 
     await userUtils.logOut(page);
   });

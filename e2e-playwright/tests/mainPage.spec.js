@@ -2,10 +2,8 @@ import { test, expect } from "@playwright/test";
 
 
 test.describe("Main Page.", () => {
-  const baseUrl = 'http://host.docker.internal:7777';
-
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${baseUrl}/`);
+    await page.goto("/");
   });
 
   test("Display the About App content.", async ({ page }) => {

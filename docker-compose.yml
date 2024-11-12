@@ -20,8 +20,6 @@ services:
     container_name: DAPdb-server
     image: postgres:14.1
     restart: "no"
-    ports:
-      - 5432:5432
     env_file:
       - project.env
     networks:

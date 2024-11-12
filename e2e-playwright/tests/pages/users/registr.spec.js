@@ -3,10 +3,8 @@ import * as fixtureService from "../../../services/fixtureService.js";
 
 
 test.describe('Registration Page', () => {
-  const baseUrl = 'http://host.docker.internal:7777';
-  
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${baseUrl}/auth/register`);
+    await page.goto("/auth/register");
   });
 
   test('Display the registration form', async ({ page }) => {
@@ -25,6 +23,7 @@ test.describe('Registration Page', () => {
     await page.click('button[type="submit"]');
 
     await expect(page.locator('.alert-danger')).toBeVisible();
+    await expect(page.locator('.alert-danger li')).toContainText('the value does not match the password');
   });
 
   test('Register successfully with valid data.', async ({ page }) => {
@@ -35,18 +34,18 @@ test.describe('Registration Page', () => {
     await page.fill('input[name="verification"]', 'password123');
     await page.click('button[type="submit"]');
 
-    await expect(page).toHaveURL(`${baseUrl}/auth/login`);
+    await expect(page).toHaveURL("/auth/login");
 
     await fixtureService.deleteUserByEmail(randomEmail);
   });
 
   test('Follow to login link.', async ({ page }) => {
     await page.click('text=Login here');
-    await expect(page).toHaveURL(`${baseUrl}/auth/login`);
+    await expect(page).toHaveURL("/auth/login");
   });
 
   test('Follow back to the main page link.', async ({ page }) => {
     await page.click('text=Back');
-    await expect(page).toHaveURL(`${baseUrl}/`);
+    await expect(page).toHaveURL("/");
   });
 });

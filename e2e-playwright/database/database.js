@@ -17,13 +17,10 @@ export const executeQuery = async (query, params) => {
         if (result.rows) response.rows = result.rows;
     } catch (e) {
         response.error = e;
-        console.error("Error executing query:", e);
     } finally {
         if (client) {
             try {
-                console.log("Attempting to connect to the database...");
                 client = await connectionPool.connect();
-                console.log("Database connection successful.");
             } catch (e) {
                 console.error("Failed to connect to the database:", e);
             }

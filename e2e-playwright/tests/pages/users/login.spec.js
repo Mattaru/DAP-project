@@ -3,10 +3,9 @@ import * as userUtils from "../../testingUtils/userUtils.js";
 
 
 test.describe('Login Page.', () => {
-  const baseUrl = 'http://host.docker.internal:7777';
 
   test.beforeEach(async ({ page }) => {
-    await page.goto(`${baseUrl}/auth/login`);
+    await page.goto("/auth/login");
   });
 
   test('Display the login form.', async ({ page }) => {
@@ -18,32 +17,32 @@ test.describe('Login Page.', () => {
   });
 
   test('Show validation error for invalid email format.', async ({ page }) => {
-    await userUtils.loginAsUser(page, baseUrl, {
+    await userUtils.loginAsUser(page, {
         email: "invali-email",
         password: "password123"
     });
 
-    await expect(page).toHaveURL(`${baseUrl}/auth/login`);
+    await expect(page).toHaveURL("/auth/login");
   });
 
   test('Login successfully with valid credentials.', async ({ page }) => {
-    await userUtils.loginAsUser(page, baseUrl, {
+    await userUtils.loginAsUser(page, {
         email: "admin@admin.com",
         password: "123456"
     });
 
-    await expect(page).toHaveURL(`${baseUrl}/topics`);
+    await expect(page).toHaveURL("/topics");
 
     await userUtils.logOut(page);
   });
 
   test('Follow the registration link.', async ({ page }) => {
     await page.click('text=Register here');
-    await expect(page).toHaveURL(`${baseUrl}/auth/register`);
+    await expect(page).toHaveURL("/auth/register");
   });
 
   test('Follow back to the main page link.', async ({ page }) => {
     await page.click('text=Back');
-    await expect(page).toHaveURL(`${baseUrl}/`);
+    await expect(page).toHaveURL("/");
   });
 });

@@ -147,9 +147,11 @@ export const userRegisterValid = async (userData) => {
     userRegisterValidationRules,
   );
 
-  if (userData.password !== userData.verification) 
+  if (userData.password !== userData.verification) {
     errors.verification = {notEqual: "the value does not match the password"};
-
+    passes = false;
+  }
+    
   if (passes) {
     const user = await userService.findUser(userData.email);
     
