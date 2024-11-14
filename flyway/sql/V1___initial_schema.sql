@@ -7,13 +7,13 @@ CREATE TABLE users (
 
 CREATE TABLE topics (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users(id),
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   name VARCHAR(255) UNIQUE
 );
 
 CREATE TABLE questions (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users(id),
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   topic_id INTEGER REFERENCES topics(id) ON DELETE CASCADE,
   question_text TEXT NOT NULL
 );
@@ -27,7 +27,7 @@ CREATE TABLE question_answer_options (
 
 CREATE TABLE question_answers (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users(id),
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   question_id INTEGER REFERENCES questions(id) ON DELETE CASCADE,
   question_answer_option_ids INTEGER[]
 );

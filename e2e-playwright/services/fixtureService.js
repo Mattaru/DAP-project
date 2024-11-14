@@ -11,6 +11,12 @@ export const createUser = async (email, password, admin=false) => {
         [email, password, admin]);
 };
 
+export const createQuestion = async (userId, topicId, text) => {
+    await executeQuery(`INSERT INTO questions (user_id, topic_id, question_text)
+        VALUES ($1, $2, $3);`, 
+            [userId, topicId, text]);
+};
+
 export const deleteTopicByUserId = async (userId) => {
     await executeQuery("DELETE FROM topics WHERE user_id = $1;", 
         [userId]);
@@ -34,4 +40,9 @@ export const getUserByEmail = async (email) => {
 export const getTopicByName = async (topicNmae) => {
     return (await executeQuery("SELECT * FROM topics WHERE name = $1;", 
         [topicNmae])).rows[0];
+};
+
+export const getQuestionByText = async (questionText) => {
+    return (await executeQuery("SELECT * FROM questions WHERE question_text = $1;", 
+        [questionText])).rows[0];
 };

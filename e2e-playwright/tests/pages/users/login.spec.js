@@ -1,13 +1,12 @@
 import { test, expect } from '@playwright/test';
-import * as userUtils from "../../testingUtils/userUtils.js";
+import * as interactionUtils from "../../testingUtils/interactionUtils.js";
 
+
+test.beforeEach(async ({ page }) => {
+  await page.goto("/auth/login");
+});
 
 test.describe('Login Page.', () => {
-
-  test.beforeEach(async ({ page }) => {
-    await page.goto("/auth/login");
-  });
-
   test('Display the login form.', async ({ page }) => {
     await expect(page.locator('h3')).toHaveText('Login');
     await expect(page.locator('form')).toBeVisible();
@@ -17,23 +16,20 @@ test.describe('Login Page.', () => {
   });
 
   test('Show validation error for invalid email format.', async ({ page }) => {
-    await userUtils.loginAsUser(page, {
-        email: "invali-email",
-        password: "password123"
-    });
+    await page.fill("input[name='email']", "invalid-email");
+    await page.fill("input[name='password']", '123');
+
+    await page.click("button[type='submit']");
 
     await expect(page).toHaveURL("/auth/login");
   });
 
   test('Login successfully with valid credentials.', async ({ page }) => {
-    await userUtils.loginAsUser(page, {
-        email: "admin@admin.com",
-        password: "123456"
-    });
+    await interactionUtils.loginAsUser(page, true);
 
     await expect(page).toHaveURL("/topics");
 
-    await userUtils.logOut(page);
+    await interactionUtils.logOut(page);
   });
 
   test('Follow the registration link.', async ({ page }) => {

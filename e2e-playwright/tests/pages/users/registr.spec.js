@@ -2,11 +2,11 @@ import { test, expect } from '@playwright/test';
 import * as fixtureService from "../../../services/fixtureService.js";
 
 
-test.describe('Registration Page', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto("/auth/register");
-  });
+test.beforeEach(async ({ page }) => {
+  await page.goto("/auth/register");
+});
 
+test.describe('Registration Page', () => {
   test('Display the registration form', async ({ page }) => {
     await expect(page.locator('h3')).toHaveText('Registration');
     await expect(page.locator('form')).toBeVisible();

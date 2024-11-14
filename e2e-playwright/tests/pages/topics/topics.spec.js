@@ -1,24 +1,19 @@
 import { test, expect } from "@playwright/test";
 import * as fixtureSrvice from "../../../services/fixtureService.js";
-import * as userUtils from "../../testingUtils/userUtils.js";
+import * as interactionUtils from "../../testingUtils/interactionUtils.js";
 
+
+const testData = {
+  randomTopicName: `Topic ${Math.random()}`
+}
+
+test.beforeEach(async ({ page }) => {
+  await interactionUtils.loginAsUser(page, true);
+});
 
 test.describe('Topics Page.', () => {
-  const testData = {
-    email: "test@test.com",
-    password: 1234,
-    randomTopicName: `Topic ${Math.random()}`
-  }
-
-  test.beforeEach(async ({ page }) => {
-    await userUtils.loginAsUser(page, {
-        email: "admin@admin.com",
-        password: "123456",
-    });
-  });
-
-  test('Adding user for tests to the database.', async () => {
-    await fixtureSrvice.createUser(testData.email, testData.password);
+  test('Adding user for tests to the database.', async ({ page }) => {
+    await interactionUtils.registerNewUser(page);
   });
 
   test('Display the topics list.', async ({ page }) => {
@@ -53,18 +48,15 @@ test.describe('Topics Page.', () => {
   });
 
   test('Regular user should not see the create topic form.', async ({ page }) => {
-    await userUtils.logOut(page);
+    await interactionUtils.logOut(page);
 
-    await userUtils.loginAsUser(page, {
-        email: testData.email,
-        password: String(testData.password),
-    });
+    await interactionUtils.loginAsUser(page);
 
     const createForm = page.locator('form[action="/topics"]');
     await expect(createForm).not.toBeVisible();
   });
 
   test('Deleting test user from the database.', async () => {
-    await fixtureSrvice.deleteUserByEmail(testData.email);
+    await interactionUtils.deleteTestUser();
   });
 });

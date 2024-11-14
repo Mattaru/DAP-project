@@ -1,12 +1,12 @@
 import { test, expect } from "@playwright/test";
-import * as userUtils from "../testingUtils/userUtils.js";
+import * as interactionUtils from "../testingUtils/interactionUtils.js";
 
+
+test.beforeEach(async ({ page }) => {
+  await page.goto("/");
+});
 
 test.describe("Navbar.", () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto("/");
-  });
-
   test("Display the brand logo.", async ({ page }) => {
     const brandLogo = await page.locator("a.navbar-brand");
     await expect(brandLogo).toHaveText("DAP");
@@ -63,7 +63,7 @@ test.describe("Navbar.", () => {
   });
 
   test("Display user email and logout link when user is authenticated.", async ({ page }) => {
-    await userUtils.loginAsUser(page, {
+    await interactionUtils.loginAsUser(page, {
       email: "admin@admin.com",
       password: "123456"
     });
@@ -79,13 +79,13 @@ test.describe("Navbar.", () => {
 
     await expect(logoutLink).toBeVisible();
 
-    await userUtils.logOut(page);
+    await interactionUtils.logOut(page);
 
     await expect(page).toHaveURL("/auth/login");
   });
 
   test("Follow each navigation link as authenticated user.", async ({ page }) => {
-    await userUtils.loginAsUser(page, {
+    await interactionUtils.loginAsUser(page, {
       email: "admin@admin.com",
       password: "123456"
     });
@@ -101,7 +101,7 @@ test.describe("Navbar.", () => {
     await page.click("a.nav-link:text('Quiz')");
     await expect(page).toHaveURL("/quiz");
 
-    await userUtils.logOut(page);
+    await interactionUtils.logOut(page);
   });
 
   test("Toggle the navbar on mobile view.", async ({ page }) => {
