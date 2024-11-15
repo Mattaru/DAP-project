@@ -19,6 +19,18 @@ export const createQuestion = async (page, topicName, questionText) => {
     await page.click('button[type="submit"]:has-text("Ask Question")');
 };
 
+export const createQuestionOptions = async (page, optNamesArr) => {
+    await page.fill('textarea[name="option_text"]', optNamesArr[0]);
+    await page.locator('#is_correct').click();
+
+    for (let i = 1; i < optNamesArr.length; i++) {
+        await page.click('button[type="button"]:has-text("Add Another Option")');
+        await page.locator('#option_text').last().fill(optNamesArr[i]);
+    }
+    
+    await page.click('button[type="submit"]:has-text("Submit Option")');
+};
+
 export const createTopic = async (page, topicName) => {
     await page.goto("/topics");
 
@@ -51,12 +63,12 @@ export const goToTheQuestion = async (page, topicName, questionText) => {
 }
 
 export const goToTheTopic = async (page, topicName) => {
-    await page.goto("/topics");
-
+    await page.goto("/topics", { waitUntil: "load" });
+    
     await page.click(`.list-group-item a:text("${topicName}")`);
 };
 
-export const loginAsUser = async (page, admin = false) => {
+export const loginAsUser = async (page, admin=false) => {
     await page.goto("/auth/login");
     
     if (admin) {

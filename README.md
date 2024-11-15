@@ -118,11 +118,19 @@ The database comes preloaded with an admin account:
 
 ## Testing
 
+### deno tests
 --- Not ready yet ---
 
+### e2e playwright tests
+
+For runin test ensure that project is up, for it you can run command:
 ```
-$ docker compose up -d drill-and-practice database flyway && \ 
-  docker compose run --entrypoint=npx e2e-playwright playwright test && \
+$ docker compose up --build -d
+```
+When project was started you can run next command for tests:
+```
+$ docker compose up -d drill-and-practice database && \ 
+  docker compose run --rm --entrypoint=npx e2e-playwright playwright test && \
   docker compose rm -sf e2e-playwright
 ```
 
