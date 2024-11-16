@@ -1,5 +1,4 @@
 import { test, expect } from "@playwright/test";
-import * as fixtureSrvice from "../../../services/fixtureService.js";
 import * as interactionUtils from "../../testingUtils/interactionUtils.js";
 
 

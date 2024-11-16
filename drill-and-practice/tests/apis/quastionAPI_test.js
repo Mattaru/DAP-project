@@ -18,7 +18,7 @@ const testData = {
   },
   mockResponse: { body: {}, status: 200 },
   mockService: {
-    getQuestionWithOptionsById: async () => (testData.mockQuestion),
+    getQuestionWithOptionsById: () => (testData.mockQuestion),
   },
 };
 
@@ -72,7 +72,7 @@ Deno.test('reciveRandomQuestion return a formatted random question', async () =>
     ]
   };
   const mockService = {
-    getRandomQuestion: async () => (mochQuestion),
+    getRandomQuestion: () => (mochQuestion),
   };
 
   await reciveRandomQuestion({ response: testData.mockResponse }, mockService);
@@ -90,7 +90,7 @@ Deno.test('reciveRandomQuestion return a formatted random question', async () =>
 
 Deno.test('reciveRandomQuestion return an empty object when no question is found.', async () => {
   const mockService = {
-    getRandomQuestion: async () => null,
+    getRandomQuestion: () => null,
   };
 
   await reciveRandomQuestion({ response: testData.mockResponse }, mockService);

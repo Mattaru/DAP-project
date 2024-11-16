@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         qOptionsCounter++;
 
-        let newOptionTemplate = `
+        const newOptionTemplate = `
             <div class="mb-3">
                 <label for="option_text${Math.random()}" class="form-label">Option Text</label>
                 <textarea id="option_text" name="option_text${Math.random()}" class="form-control" placeholder="Enter option text" required></textarea>

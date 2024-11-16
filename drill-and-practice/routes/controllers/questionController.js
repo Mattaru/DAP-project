@@ -1,4 +1,3 @@
-import { executeQuery } from "../../database/database.js";
 import * as questionOptionService from "../../services/questionOptionService.js";
 import * as questionService from "../../services/questionService.js";
 import * as dataValidUtils from "../../utils/dataValidUtils.js";
