@@ -21,9 +21,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    env:
-          DENO_TEST: true
-
     steps:
       - name: Setup repo
         uses: actions/checkout@v4
@@ -37,6 +34,9 @@ jobs:
       # Uncomment this step to verify the use of 'deno fmt' on each commit.
       # - name: Verify formatting
       #   run: deno fmt --check
+
+      env:
+        DENO_TEST: true
 
       - name: Run linter
         run: deno lint
