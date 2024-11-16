@@ -21,6 +21,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    env:
+          DENO_TEST: true
+
     steps:
       - name: Setup repo
         uses: actions/checkout@v4
@@ -39,6 +42,4 @@ jobs:
         run: deno lint
 
       - name: Run tests
-        env:
-          DENO_TEST: true
         run: deno test -A
