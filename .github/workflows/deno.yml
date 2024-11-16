@@ -39,4 +39,6 @@ jobs:
         run: deno lint
 
       - name: Run tests
+        env:
+          DENO_TEST: true
         run: DENO_TEST=true deno test -A
