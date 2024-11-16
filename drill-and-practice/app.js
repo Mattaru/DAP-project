@@ -10,7 +10,7 @@ import { router } from "./routes/routes.js";
 
 export const app = new Application();
 
-app.use(oakCors(config.corsOptions));
+app.use(oakCors(config.CORS));
 
 app.use(Session.initMiddleware());
 app.use(errorMiddleware);

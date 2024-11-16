@@ -1,4 +1,5 @@
 import { app } from "./app.js";
+import * as config from "./config/config.js";
 
 
-app.listen({ port: 7777 });
+app.listen({ port: config.PORT });

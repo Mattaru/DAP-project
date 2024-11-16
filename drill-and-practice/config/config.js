@@ -1,12 +1,14 @@
+export const PORT = 7777;
+
 // Here you can setup restrictions for your routes.
-export const restrictedPaths = [
+export const RESTRICTEDPATHES = [
     "/topics",
     "/quiz",
 ];
 
 // API
 // Cross-Origin Resource Sharing settings for your API
-export const corsOptions = {
+export const CORS = {
     origin: "*", // Allow all origins
     methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"], // Allow common methods
     allowedHeaders: ["Content-Type", "Authorization"], // Allow common headers
