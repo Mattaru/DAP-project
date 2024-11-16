@@ -125,6 +125,10 @@ You can run deno tests with command:
 ```
 $ DENO_TEST=true deno test -A
 ```
+Or first of all declare global env variable `DENO_TEST=true` and then run command:
+```
+$ deno test -A
+```
 
 ### e2e playwright tests
 
