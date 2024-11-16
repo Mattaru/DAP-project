@@ -121,7 +121,7 @@ The database comes preloaded with an admin account:
 
 ### deno tests
 
-You can star deno tests with command:
+You can run deno tests with command:
 ```
 $ DENO_TEST=true deno test -A
 ```
