@@ -55,7 +55,8 @@ The project follows a modular structure:
 
 ## Configurations
 
---- Not ready yet ---
+You can find config file by path `config/config.js` in the repo.
+This contains all basic settings of App that you can configure before run the app.
 
 ## Installation
 
@@ -119,7 +120,11 @@ The database comes preloaded with an admin account:
 ## Testing
 
 ### deno tests
---- Not ready yet ---
+
+You can star deno tests with command:
+```
+$ DENO_TEST=true deno test -A
+```
 
 ### e2e playwright tests
 
