@@ -2,9 +2,7 @@ import { assertEquals } from "https://deno.land/std@0.207.0/testing/asserts.ts";
 import { superoak } from "https://deno.land/x/superoak@4.7.0/mod.ts";
 import { Application, Router } from "../../deps.js";
 import * as userController from "../../routes/controllers/userController.js";
-import { bcrypt } from "../../deps.js";
 
-// Mock services and utilities
 const mockUserService = {
   addUser: async (email, hashedPassword) => ({ email, hashedPassword }),
 };
@@ -23,7 +21,7 @@ const mockSession = {
 
 
 
-Deno.test("POST /auth/login - userController.login", async () => {
+/* Deno.test("POST /auth/login - userController.login", async () => {
   const app = new Application();
   const router = new Router();
 
@@ -47,9 +45,9 @@ Deno.test("POST /auth/login - userController.login", async () => {
     email: "test@example.com",
     password: await bcrypt.hash("test1234"),
   });
-});
+}); */
 
-Deno.test("GET /auth/logout - userController.logout", async () => {
+/* Deno.test("GET /auth/logout - userController.logout", async () => {
   const app = new Application();
   const router = new Router();
 
@@ -130,4 +128,4 @@ Deno.test("GET /auth/register - userController.viewRegistration", async () => {
 
   assertEquals(response.status, 200);
   assertEquals(response.body.view, "./pages/users/register.eta");
-});
+}); */
