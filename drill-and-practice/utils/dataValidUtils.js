@@ -1,6 +1,4 @@
 import { bcrypt, validasaur } from "../deps.js";
-import * as topicService from "../services/topicService.js";
-import * as userService from "../services/userService.js";
 
 
 export const checkRightAnswers = (answerData, qestionOptions) => {
@@ -80,7 +78,7 @@ const topicValidationRules = {
   name: [validasaur.required, validasaur.minLength(1)],
 };
 
-export const topicValid = async (topicData, admin) => {
+export const topicValid = async (topicData, topic, admin) => {
   let [passes, errors] = await validasaur.validate(
     topicData,
     topicValidationRules,
@@ -89,13 +87,11 @@ export const topicValid = async (topicData, admin) => {
   if (!admin) {
       errors.admin = {haveNotPermisions: "you do not permission to do this action"};
       passes = false;
-  } else if (passes && admin) {
-    const topic = await topicService.findTopic(topicData.name);
+  }
 
-    if (topic) {
+  if (topic) {
       errors.name = {nameAlreadyExist: "a topic with the same name is already exists"};
       passes = false;
-    }
   }
 
   return [passes, errors];
@@ -106,16 +102,13 @@ const userLoginValidationRules = {
   password: [validasaur.required, validasaur.minLength(4)],
 };
 
-export const userLoginValid = async (userData) => {
-  let user;
+export const userLoginValid = async (userData, user) => {
   let [passes, errors] = await validasaur.validate(
     userData,
     userLoginValidationRules,
   );
 
   if (passes) {
-    user = await userService.findUser(userData.email);
-    
     if (!user) {
       errors.email = {userNotExist: "user with this email address does not exist"}
       passes = false;
@@ -141,7 +134,7 @@ const userRegisterValidationRules = {
   verification: [validasaur.required, validasaur.minLength(4)],
 };
 
-export const userRegisterValid = async (userData) => {
+export const userRegisterValid = async (userData, user) => {
   let [passes, errors] = await validasaur.validate(
     userData,
     userRegisterValidationRules,
@@ -151,15 +144,11 @@ export const userRegisterValid = async (userData) => {
     errors.verification = {notEqual: "the value does not match the password"};
     passes = false;
   }
-    
-  if (passes) {
-    const user = await userService.findUser(userData.email);
-    
-    if (user) {
-      errors.email = {alreadyExists: "this email already exists"};
-      passes = false;
-    } 
-  }
+  
+  if (user) {
+    errors.email = {alreadyExists: "this email already exists"};
+    passes = false;
+  } 
 
   return [passes, errors];
 };

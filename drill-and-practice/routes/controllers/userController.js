@@ -6,7 +6,8 @@ import * as userService from "../../services/userService.js";
 
 export const login = async ({ request, response, render, state }) => {
     const userData = await requestUtils.getData(request, {type: "form"});
-    const [passes, errors, user] = await dataValidUtils.userLoginValid(userData);
+    const userFromDb = await userService.findUser(userData.email);
+    const [passes, errors, user] = await dataValidUtils.userLoginValid(userData, userFromDb);
 
     if (!passes) {
         userData.validationErrors = errors;
@@ -27,7 +28,8 @@ export const logout = async ({ response, state }) => {
 
 export const registration = async ({ request, response, render }) => {
     const userData = await requestUtils.getData(request, {type: "form"});
-    const [passes, errors] = await dataValidUtils.userRegisterValid(userData);
+    const userFromDb = await userService.findUser(userData.email);
+    const [passes, errors] = await dataValidUtils.userRegisterValid(userData, userFromDb);
 
     if (!passes) {
         userData.validationErrors = errors;

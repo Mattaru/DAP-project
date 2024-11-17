@@ -1,3 +1,4 @@
+// PORT for runing server localy.
 export const PORT = 7777;
 
 // Here you can setup restrictions for your routes.

@@ -6,7 +6,8 @@ import * as requestUtils from "../../utils/requestUtils.js";
 
 export const createTopic = async ({ request, response, render, user }) => {
     const topicData = await requestUtils.getData(request, {type: "form"});
-    const [passes, errors] = await dataValidUtils.topicValid(topicData, user.admin);
+    const topicFromDb = await topicService.findTopic(topicData.name);
+    const [passes, errors] = await dataValidUtils.topicValid(topicData, topicFromDb, user.admin);
     
     if (!passes) {
         topicData.validationErrors = errors;

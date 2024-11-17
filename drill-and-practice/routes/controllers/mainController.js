@@ -3,10 +3,15 @@ import * as questionService from "../../services/questionService.js";
 import * as topicService from "../../services/topicService.js";
 
 
-export const viewMain = async ({ render }) => {
+export const viewMain = async ({ render },
+    something={},
+    aService=answerService,
+    qService=questionService,
+    tService=topicService
+) => {
     render("main.eta", {
-        answersCount: await answerService.getAnswersCount(),
-        questionsCount: await questionService.getQuestionsCount(),
-        topicsCount: await topicService.getTopicsCount(),
+        answersCount: await aService.getAnswersCount(),
+        questionsCount: await qService.getQuestionsCount(),
+        topicsCount: await tService.getTopicsCount(),
     });
 };

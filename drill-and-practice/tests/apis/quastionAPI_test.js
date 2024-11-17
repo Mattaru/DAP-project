@@ -22,40 +22,43 @@ const testData = {
   },
 };
 
-Deno.test('checkAnswer return {correct: true} when answer is right.', async () => {
+Deno.test('API: checkAnswer return {correct: true} when answer is right.', async () => {
   testData.mockAnswer = { questionId: 1, optionsIds: [1, 2] };
 
   await checkAnswer(
     { request: testData.mockRequest, response: testData.mockResponse },
+    undefined,
     testData.mockService
   );
 
   assertEquals(testData.mockResponse.body, { correct: true });
 });
 
-Deno.test('checkAnswer return {correct: false} when answer is wrong.', async () => {
+Deno.test('API: checkAnswer return {correct: false} when answer is wrong.', async () => {
   testData.mockAnswer = { questionId: 1, optionsIds: [2] };;
 
   await checkAnswer(
     { request: testData.mockRequest, response: testData.mockResponse },
+    undefined,
     testData.mockService
   );
   
   assertEquals(testData.mockResponse.body, { correct: false });
 });
 
-Deno.test('checkAnswer return status 400 for invalid answer object.', async () => {
+Deno.test('API: checkAnswer return status 400 for invalid answer object.', async () => {
   testData.mockAnswer = {};
 
   await checkAnswer(
     { request: testData.mockRequest, response: testData.mockResponse }, 
+    undefined,
     testData.mockService
   );
 
   assertEquals(testData.mockResponse.status, 400);
 });
 
-Deno.test('reciveRandomQuestion return a formatted random question', async () => {
+Deno.test('API: reciveRandomQuestion return a formatted random question', async () => {
   const randomQueastionText = `qText: ${Math.random()}`;
   const randomOptions = [
     `optText: ${Math.random()}`, 
@@ -75,7 +78,7 @@ Deno.test('reciveRandomQuestion return a formatted random question', async () =>
     getRandomQuestion: () => (mochQuestion),
   };
 
-  await reciveRandomQuestion({ response: testData.mockResponse }, mockService);
+  await reciveRandomQuestion({ response: testData.mockResponse }, undefined, mockService);
   
   assertEquals(testData.mockResponse.body, {
     questionId: 1,
@@ -88,12 +91,12 @@ Deno.test('reciveRandomQuestion return a formatted random question', async () =>
   });
 });
 
-Deno.test('reciveRandomQuestion return an empty object when no question is found.', async () => {
+Deno.test('API: reciveRandomQuestion return an empty object when no question is found.', async () => {
   const mockService = {
     getRandomQuestion: () => null,
   };
 
-  await reciveRandomQuestion({ response: testData.mockResponse }, mockService);
+  await reciveRandomQuestion({ response: testData.mockResponse }, undefined, mockService);
 
   assertEquals(testData.mockResponse.body, {});
 });

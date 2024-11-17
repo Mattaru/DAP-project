@@ -14,6 +14,6 @@ export const renderMiddleware = async (ctx, next) => {
     ctx.response.headers.set("Content-Type", "text/html; charset=utf-8");
     ctx.response.body = await renderFile(file, data);
   };
-
+  
   await next();
 };

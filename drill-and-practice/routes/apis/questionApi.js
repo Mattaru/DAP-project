@@ -2,7 +2,7 @@ import * as questionService from "../../services/questionService.js";
 import * as apiUtils from "../../utils/apiUtils.js";
 
 
-export const checkAnswer = async ({ request, response }, service=questionService) => {
+export const checkAnswer = async ({ request, response }, something={}, service=questionService) => {
     const body = request.body({type: "json"});
     const answer = await body.value;
 
@@ -10,6 +10,7 @@ export const checkAnswer = async ({ request, response }, service=questionService
 
     if (passes){
         const question = await service.getQuestionWithOptionsById(answer.questionId);
+        
         const answerIsRight = apiUtils.checkRightAnswers(answer.optionsIds, question.options);
     
         if (answerIsRight) response.body = {correct: true};
@@ -19,7 +20,7 @@ export const checkAnswer = async ({ request, response }, service=questionService
     }
 };
 
-export const reciveRandomQuestion = async ({ response }, service=questionService) => {
+export const reciveRandomQuestion = async ({ response }, something={}, service=questionService) => {
     const rQuestion = await service.getRandomQuestion();
     
     if (rQuestion) {
