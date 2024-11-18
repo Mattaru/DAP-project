@@ -4,11 +4,11 @@ import * as requestUtils from "../../utils/requestUtils.js";
 import * as userService from "../../services/userService.js";
 
 
-export const login = async ({ request, response, render, state }) => {
+export const login = async ({ request, response, render, state }, next={}, service=userService) => {
     const userData = await requestUtils.getData(request, {type: "form"});
-    const userFromDb = await userService.findUser(userData.email);
+    const userFromDb = await service.findUser(userData.email);
     const [passes, errors, user] = await dataValidUtils.userLoginValid(userData, userFromDb);
-
+    
     if (!passes) {
         userData.validationErrors = errors;
 
@@ -26,16 +26,16 @@ export const logout = async ({ response, state }) => {
     response.redirect("/auth/login");
 };
 
-export const registration = async ({ request, response, render }) => {
+export const registration = async ({ request, response, render }, next={}, service=userService) => {
     const userData = await requestUtils.getData(request, {type: "form"});
-    const userFromDb = await userService.findUser(userData.email);
+    const userFromDb = await service.findUser(userData.email);
     const [passes, errors] = await dataValidUtils.userRegisterValid(userData, userFromDb);
 
     if (!passes) {
         userData.validationErrors = errors;
         await render("./pages/users/register.eta", userData);
     } else {
-        await userService.addUser(
+        await service.addUser(
             userData.email,
             await bcrypt.hash(userData.password),
         );

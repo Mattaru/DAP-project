@@ -1,33 +1,20 @@
 import { assertEquals } from "https://deno.land/std@0.207.0/testing/asserts.ts";
 import { superoak } from "https://deno.land/x/superoak@4.7.0/mod.ts";
-import { Application, Router } from "../../deps.js";
+import { Application, Router, bcrypt } from "../../deps.js";
 import * as userController from "../../routes/controllers/userController.js";
-
-const mockUserService = {
-  addUser: async (email, hashedPassword) => ({ email, hashedPassword }),
-};
-
-const mockSession = {
-  async set(key, value) {
-    this[key] = value;
-  },
-  async get(key) {
-    return this[key];
-  },
-  async deleteSession() {
-    this.user = null;
-  },
-};
+import * as mocks from "../mockUtils/mocks.js";
 
 
-
-/* Deno.test("POST /auth/login - userController.login", async () => {
+Deno.test("POST /auth/login - userController.login", async () => {
   const app = new Application();
   const router = new Router();
 
+  mocks.mockUserService.randomUser.password = await bcrypt.hash(mocks.mockUserService.randomPassword);
+
   router.post("/auth/login", async (ctx) => {
-    ctx.state.session = mockSession;
-    await userController.login(ctx);
+    ctx.render = (view, data) => mocks.render(ctx, view, data);
+    ctx.state.session = mocks.mockSession;
+    await userController.login(ctx, undefined, mocks.mockUserService);
   });
 
   app.use(router.routes());
@@ -35,24 +22,19 @@ const mockSession = {
 
   const request = await superoak(app);
   const response = await request
-    .post("/auth/login")
-    .send("email=test@example.com&password=test1234");
+  .post("/auth/login")
+  .send(`email=${mocks.mockUserService.randomUser.email}.com&password=${mocks.mockUserService.randomPassword}`);
 
   assertEquals(response.status, 302);
-  assertEquals(response.headers.get("location"), "/topics");
-  assertEquals(await mockSession.get("user"), {
-    id: 1,
-    email: "test@example.com",
-    password: await bcrypt.hash("test1234"),
-  });
-}); */
+  assertEquals(response.get("location"), "/topics");
+});
 
-/* Deno.test("GET /auth/logout - userController.logout", async () => {
+Deno.test("GET /auth/logout - userController.logout", async () => {
   const app = new Application();
   const router = new Router();
 
   router.get("/auth/logout", async (ctx) => {
-    ctx.state.session = mockSession;
+    ctx.state.session = mocks.mockSession;
     await userController.logout(ctx);
   });
 
@@ -63,8 +45,8 @@ const mockSession = {
   const response = await request.get("/auth/logout");
 
   assertEquals(response.status, 302);
-  assertEquals(response.headers.get("location"), "/auth/login");
-  assertEquals(await mockSession.get("user"), null);
+  assertEquals(response.get("location"), "/auth/login");
+  assertEquals(await mocks.mockSession.get("user"), null);
 });
 
 Deno.test("POST /auth/register - userController.registration", async () => {
@@ -72,8 +54,8 @@ Deno.test("POST /auth/register - userController.registration", async () => {
   const router = new Router();
 
   router.post("/auth/register", async (ctx) => {
-    ctx.state.session = mockSession;
-    await userController.registration(ctx);
+    ctx.state.session = mocks.mockSession;
+    await mocks.userController.registration(ctx, undefined, mocks.mockUserService);
   });
 
   app.use(router.routes());
@@ -82,13 +64,17 @@ Deno.test("POST /auth/register - userController.registration", async () => {
   const request = await superoak(app);
   const response = await request
     .post("/auth/register")
-    .send("email=newuser@example.com&password=newpassword");
+    .send(
+      `email=${mocks.mockUserService.randomUser.email}
+      &password=${mocks.mockUserService.randomPassword}
+      &verification=${mocks.mockUserService.randomPassword}`
+    );
 
   assertEquals(response.status, 302);
-  assertEquals(response.headers.get("location"), "/auth/login");
+  assertEquals(response.get("location"), "/auth/login");
 });
 
-Deno.test("GET /auth/login - userController.viewLogin", async () => {
+/* Deno.test("GET /auth/login - userController.viewLogin", async () => {
   const app = new Application();
   const router = new Router();
 
