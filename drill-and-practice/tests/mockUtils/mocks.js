@@ -1,3 +1,21 @@
+import { Application, Router } from "../../deps.js";
+
+
+export const getMockAppWithRouter = (method, path, func) => {
+  const app = new Application();
+  const router = new Router();
+
+  if (method === "GET") router.get(path, func);
+  else if (method === "POST") router.post(path, func);
+  else if (method === "DELETE") router.delete(path, func);
+  else if (method === "UPDATE") router.update(path, func);
+
+  app.use(router.routes());
+  app.use(router.allowedMethods());
+
+  return app;
+};
+
 export const mockAnswerService = {
     randomAnswersCount: Math.random(),
     getAnswersCount: () => mockAnswerService.randomAnswersCount,
@@ -29,13 +47,13 @@ export const mockRender = (ctx, view, data) => {
 };
 
 export const mockSession = {
-    async set(key, value) {
-      this[key] = value;
-    },
-    async get(key) {
-      return this[key];
-    },
-    async deleteSession() {
-      this.user = null;
-    },
-  };
+  set(key, value) {
+    this[key] = value;
+  },
+  get(key) {
+    return this[key];
+  },
+  deleteSession() {
+    this.user = null;
+  },
+};

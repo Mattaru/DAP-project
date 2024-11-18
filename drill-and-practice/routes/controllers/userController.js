@@ -30,7 +30,7 @@ export const registration = async ({ request, response, render }, next={}, servi
     const userData = await requestUtils.getData(request, {type: "form"});
     const userFromDb = await service.findUser(userData.email);
     const [passes, errors] = await dataValidUtils.userRegisterValid(userData, userFromDb);
-
+    
     if (!passes) {
         userData.validationErrors = errors;
         await render("./pages/users/register.eta", userData);

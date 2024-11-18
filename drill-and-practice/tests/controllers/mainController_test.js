@@ -1,4 +1,3 @@
-import { Application, Router } from "../../deps.js";
 import { assertEquals } from "https://deno.land/std@0.207.0/testing/asserts.ts";
 import { superoak } from "https://deno.land/x/superoak@4.7.0/mod.ts";
 import { viewMain } from "../../routes/controllers/mainController.js";
@@ -6,10 +5,7 @@ import * as mocks from "../mockUtils/mocks.js";
 
 
 Deno.test("GET / - mainController.viewMain", async () => {
-    const app = new Application();
-    const router = new Router();
-
-    router.get("/", async (ctx) => {
+    const mockViewMain = async (ctx) => {
         ctx.render = (view, data) => mocks.mockRender(ctx, view, data);
         await viewMain(
             ctx, 
@@ -18,10 +14,9 @@ Deno.test("GET / - mainController.viewMain", async () => {
             mocks.mockQuestionService, 
             mocks.mockTopicService
         );
-    });
+    };
 
-    app.use(router.routes());
-    app.use(router.allowedMethods());
+    const app = mocks.getMockAppWithRouter("GET", "/", mockViewMain);
 
     const request = await superoak(app);
     const response = await request.get("/");
