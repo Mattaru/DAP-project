@@ -4,7 +4,7 @@ import * as topicService from "../../services/topicService.js";
 
 
 export const viewMain = async ({ render },
-    something={},
+    next={},
     aService=answerService,
     qService=questionService,
     tService=topicService

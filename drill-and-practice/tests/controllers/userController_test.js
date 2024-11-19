@@ -59,7 +59,7 @@ describe('POST /auth/login - userController.login', async () => {
 	});
 });
 
-Deno.test("GET /auth/logout - userController.logout", async () => {
+Deno.test('GET /auth/logout - userController.logout', async () => {
 	const mockLogout = async (ctx) => {
 		ctx.state.session = mocks.mockSession;
 		await userController.logout(ctx);
@@ -129,7 +129,7 @@ describe('POST /auth/register - userController.registration', async () => {
 	});
 });
 
-Deno.test("GET /auth/login - userController.viewLogin", async () => {
+Deno.test('GET /auth/login - userController.viewLogin', async () => {
 	const mockViewLogin = async (ctx) => {
 		ctx.render = (view, data) => mocks.mockRender(ctx, view, data);
 		await userController.viewLogin(ctx);
@@ -144,7 +144,7 @@ Deno.test("GET /auth/login - userController.viewLogin", async () => {
 	assertEquals(response.body.view, "./pages/users/login.eta");
 });
 
-Deno.test("GET /auth/register - userController.viewRegistration", async () => {
+Deno.test('GET /auth/register - userController.viewRegistration', async () => {
 	const mockViewRegistration = async (ctx) => {
 		ctx.render = (view, data) => mocks.mockRender(ctx, view, data);
 		await userController.viewRegistration(ctx);

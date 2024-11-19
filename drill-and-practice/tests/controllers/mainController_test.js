@@ -4,7 +4,7 @@ import { viewMain } from "../../routes/controllers/mainController.js";
 import * as mocks from "../mockUtils/mocks.js";
 
 
-Deno.test("GET / - mainController.viewMain", async () => {
+Deno.test('GET / - mainController.viewMain', async () => {
     const mockViewMain = async (ctx) => {
         ctx.render = (view, data) => mocks.mockRender(ctx, view, data);
         await viewMain(

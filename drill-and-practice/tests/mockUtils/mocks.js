@@ -17,33 +17,89 @@ export const getMockAppWithRouter = (method, path, func) => {
 };
 
 export const mockAnswerService = {
-    randomAnswersCount: Math.random(),
-    getAnswersCount: () => mockAnswerService.randomAnswersCount,
+  randomAnswersCount: Math.random(),
+  getAnswersCount() {
+    return this.randomAnswersCount;
+  },
 };
 
 export const mockQuestionService = {
-    randomQuestionsCount: Math.random(),
-    getQuestionsCount: () => mockQuestionService.randomQuestionsCount,
+  randomQuestion: {
+    id: Math.random(),
+    user_id: Math.random(),
+    topic_id: Math.random(),
+    question_text: `Text ${Math.random()}`,
+  },
+  randomQuestionsCount: Math.random(),
+  getQuestionsCount() { 
+    return this.randomQuestionsCount;
+  },
+  findAllQuestinsByTopicId() {
+    return this.randomQuestion;
+  },
 };
 
 export const mockTopicService = {
-    randomTopicsCount: Math.random(),
-    getTopicsCount: () => mockTopicService.randomTopicsCount,
+  randomTopic: {
+    id: Math.random(),
+    user_id: Math.random(),
+    name: `Topic ${Math.random()}`,
+  },
+  randomTopicsCount: Math.random(),
+  addTopic(userId, topicName) {
+    return {userId, topicName};
+  },
+  getTopicsCount() {
+    return this.randomTopicsCount;
+  },
+  findAll() {
+    return this.randomTopic;
+  },
+  findTopic() {
+    return this.randomTopic;
+  },
+  findTopicById() {
+    return this.randomTopic;
+  },
+  returnRandomTopic() {
+    return this.randomTopic;
+  },
+  returnNull() {return null;},
+  removeTopic() {return null;},
 };
 
+export const mockUsers = {
+  admin: {
+    id: Math.random(),
+    email: `${Math.random()}@admin.com`,
+    password: null,
+    admin: true
+  },
+  regularUser: {
+    id: Math.random(),
+    email: `${Math.random()}@regular.com`,
+    password: null,
+    admin: false
+  },
+}; 
+
 export const mockUserService = {
-    randomPassword: `${Math.random()}`,
-    randomUser: {
-        id: Math.random(),
-        email: `${Math.random()}@test.com`,
-        password: null,
-    },
-    addUser: async (email, hashedPassword) => ({ email, hashedPassword }),
-    findUser: (email) => (mockUserService.randomUser),
+  randomPassword: `${Math.random()}`,
+  randomUser: {
+      id: Math.random(),
+      email: `${Math.random()}@test.com`,
+      password: null,
+  },
+  addUser(email, hashedPassword) {
+    return { email, hashedPassword };
+  },
+  findUser() {
+    return this.randomUser;
+  },
 };
 
 export const mockRender = (ctx, view, data) => {
-    ctx.response.body = { view, data };
+  ctx.response.body = { view, data };
 };
 
 export const mockSession = {

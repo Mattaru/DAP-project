@@ -2,7 +2,7 @@ import * as questionService from "../../services/questionService.js";
 import * as apiUtils from "../../utils/apiUtils.js";
 
 
-export const checkAnswer = async ({ request, response }, something={}, service=questionService) => {
+export const checkAnswer = async ({ request, response }, next={}, service=questionService) => {
     const body = request.body({type: "json"});
     const answer = await body.value;
 
@@ -20,7 +20,7 @@ export const checkAnswer = async ({ request, response }, something={}, service=q
     }
 };
 
-export const reciveRandomQuestion = async ({ response }, something={}, service=questionService) => {
+export const reciveRandomQuestion = async ({ response }, next={}, service=questionService) => {
     const rQuestion = await service.getRandomQuestion();
     
     if (rQuestion) {

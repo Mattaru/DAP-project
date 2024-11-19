@@ -4,9 +4,9 @@ import * as dataValidUtils from "../../utils/dataValidUtils.js";
 import * as requestUtils from "../../utils/requestUtils.js";
 
 
-export const createTopic = async ({ request, response, render, user }) => {
+export const createTopic = async ({ request, response, render, user }, next={}, service=topicService) => {
     const topicData = await requestUtils.getData(request, {type: "form"});
-    const topicFromDb = await topicService.findTopic(topicData.name);
+    const topicFromDb = await service.findTopic(topicData.name);
     const [passes, errors] = await dataValidUtils.topicValid(topicData, topicFromDb, user.admin);
     
     if (!passes) {
@@ -14,29 +14,29 @@ export const createTopic = async ({ request, response, render, user }) => {
         
         await render("./pages/topics/topics.eta", topicData);
     } else {
-        await topicService.addTopic(user.id, topicData.name);
+        await service.addTopic(user.id, topicData.name);
 
         response.redirect("/topics");
     }
 };
 
-export const deleteTopic = async ({ params, response, user }) => {
+export const deleteTopic = async ({ params, response, user }, next={}, service=topicService) => {
     if (user.admin) {
-        await topicService.removeTopic(params.id);
-    } else {
-        response.body = "You do not have permissions for this action."
-    }
+        await service.removeTopic(params.id);
 
-    response.redirect("/topics");
+        response.redirect("/topics");
+    } else {
+        response.body = "You do not have permissions for this action.";
+    }
 };
 
-export const viewTopic = async ({ params, render }) => {
+export const viewTopic = async ({ params, render }, next={}, tService=topicService, qService=questionService) => {
     await render("./pages/topics/topic.eta", {
-        topic: await topicService.findTopicById(params.id),
-        questions: await questionService.findAllQuestinsByTopicId(params.id),
+        topic: await tService.findTopicById(params.id),
+        questions: await qService.findAllQuestinsByTopicId(params.id),
     });
 };
 
-export const viewTopicsList = async ({ render }) => {
-    await render("./pages/topics/topics.eta", {topics: await topicService.findAll()})
+export const viewTopicsList = async ({ render }, next={}, service=topicService) => {
+    await render("./pages/topics/topics.eta", {topics: await service.findAll()})
 };
