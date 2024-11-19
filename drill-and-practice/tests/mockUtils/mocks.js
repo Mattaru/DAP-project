@@ -31,11 +31,31 @@ export const mockQuestionService = {
     question_text: `Text ${Math.random()}`,
   },
   randomQuestionsCount: Math.random(),
+  addQuestion() {return null;},
   getQuestionsCount() { 
     return this.randomQuestionsCount;
   },
+  findQuestionById() {
+    return this.randomQuestion;
+  },
   findAllQuestinsByTopicId() {
     return this.randomQuestion;
+  },
+};
+
+export const mockQuestionOptionsService = {
+  randomQOption: {
+    id: Math.random(),
+    question_id: Math.random(),
+    option_text: `Option ${Math.random()}`,
+    is_correct: false,
+  },
+  findAllByQuestionId() {
+    return this.randomQOption;
+  },
+  returnNull() {return null;},
+  returnRandomQOption() {
+    return this.randomQOption;
   },
 };
 
