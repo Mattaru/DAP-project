@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const addOptionBtn = document.getElementById("addOptionBtn");
-    let qOptionsCounter = 0;
+    const optionsContainer = document.getElementById("optionsContainer");
+    const childrenWithClass = optionsContainer.querySelectorAll(".form-check");
+    let qOptionsCounter = childrenWithClass.length;
 
     const appendErrMsg = (element, msg) => {
         const div = document.createElement("div");
@@ -16,11 +18,10 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     addOptionBtn.addEventListener("click", () => {
-        const optionsContainer = document.getElementById("optionsContainer");
         const errContainer = document.getElementById("errorsContainer");
         const newOption = document.createElement("div");
 
-        if (qOptionsCounter === 9) {
+        if (qOptionsCounter === 10) {
             addOptionBtn.disabled = true;
 
             if (errContainer.childElementCount > 0) return;
@@ -37,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const newOptionTemplate = `
             <div class="mb-3">
                 <label for="option_text${Math.random()}" class="form-label">Option Text</label>
-                <textarea id="option_text" name="option_text${Math.random()}" class="form-control" placeholder="Enter option text" required></textarea>
+                <textarea id="option_text" name="option_text${Math.random()}" class="form-control" placeholder="Enter option text"></textarea>
             </div>
             <div class="form-check mb-3">
                 <input id="is_correct" name="is_correct${Math.random()}" type="checkbox" class="form-check-input">

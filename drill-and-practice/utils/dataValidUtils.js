@@ -52,26 +52,31 @@ export const makeArreyWihtOptionsData = (qOptionsData) => {
   return arr;
 };
 
-const qOPtionValidationRules = (qOptionsData) => {
-  const rules = Object.keys(qOptionsData).reduce((acc, key) => {
-    if (key.startsWith("option_text")) {
-      acc[key] = [validasaur.required, validasaur.minLength(1)];
-    }
-    return acc;
-  }, {});
-
-  return rules;
-};
+const questionOptionValidationRules = {
+  option_text: [validasaur.required, validasaur.minLength(1)],
+}
 
 export const questionOptionValid = async (qOptionsData) => {
-  const questionValidationRules = qOPtionValidationRules(qOptionsData);
+  const optArr = makeArreyWihtOptionsData(qOptionsData);
+  let passes = true; 
+  let errors;
   
-  const [passes, errors] = await validasaur.validate(
-    qOptionsData,
-    questionValidationRules
-  );
+  if (optArr.length > 10) {
+    passes = false;
+    errors.options = {soManyOptions: "You can't add more then 10 answer options in one time."};
+    return [passes, errors, optArr];
+  }
 
-  return [passes, errors];
+  for (const opt of optArr) {
+    [passes, errors] = await validasaur.validate(
+      opt,
+      questionOptionValidationRules
+    );
+
+    if (!passes) return [passes, errors, optArr];
+  }
+
+  return [passes, errors, optArr];
 };
 
 const topicValidationRules = {

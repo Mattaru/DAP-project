@@ -1,21 +1,22 @@
+import * as questionService from "../../services/questionService.js";
 import * as questionOptionService from "../../services/questionOptionService.js";
 import * as dataValidUtils from "../../utils/dataValidUtils.js";
 import * as requestUtils from "../../utils/requestUtils.js";
 
 
-export const addQuestionOption = async ({ params, request, response, render }) => {
+export const addQuestionOption = async ({ params, request, response, render }, next={}, qService=questionService, qOptService=questionOptionService) => {
     const qOptionsData = await requestUtils.getData(request, {type: "form"});
-    const [passes, errors] = await dataValidUtils.questionOptionValid(qOptionsData);
+    const [passes, errors, options] = await dataValidUtils.questionOptionValid(qOptionsData);
     
     if (!passes) {
         qOptionsData.validationErrors = errors;
+        qOptionsData.errOptions = options;
+        qOptionsData.topic = {id: params.id};
+        qOptionsData.question = await qService.findQuestionById(params.qId);
+
         await render("./pages/questions/question.eta", qOptionsData);
     } else {
-        const optArr = dataValidUtils.makeArreyWihtOptionsData(qOptionsData);
-        
-        if (optArr.length > 10) response.body = "You can't add mothen 10 answer options in one time."
-
-        await questionOptionService.addMultipleQuestionOptions(params.qId, optArr);
+        await qOptService.addMultipleQuestionOptions(params.qId, options);
 
         response.redirect(`/topics/${params.id}/questions/${params.qId}`);
     }
