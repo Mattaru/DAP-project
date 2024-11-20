@@ -137,7 +137,7 @@ $ docker compose up --build -d
 ```
 When project was started you can run next command for tests (we declearing global var `E2E_TESTS_LOCAL=true` from start):
 ```
-$ E2E_TESTS_LOCAL=true docker compose up -d drill-and-practice database && \ 
+$ E2E_TESTS_LOCAL=true && \ 
   docker compose run --rm --entrypoint=npx e2e-playwright playwright test && \
   docker compose rm -sf e2e-playwright
 ```
