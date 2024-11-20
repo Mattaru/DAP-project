@@ -1,6 +1,12 @@
 import { bcrypt, validasaur } from "../deps.js";
 
 
+export const answerDataValid = (answerData) => {
+  return Object.keys(answerData).some((key) => {
+    return !isNaN(Number(key)) && answerData[key] === "on";
+  });
+};
+
 export const checkRightAnswers = (answerData, qestionOptions) => {
   let passes = false;
 

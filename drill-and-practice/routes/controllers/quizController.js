@@ -7,13 +7,15 @@ import * as requestUtils from "../../utils/requestUtils.js";
 
 export const checkOptions = async ({ params, request, render, user }, next={}, aService=answerService, qService=questionService) => {
     const answerData = await requestUtils.getData(request);
+    const answerDataValid = dataValidUtils.answerDataValid(answerData);
     const question = await qService.getQuestionWithOptionsById(params.qId);
     
     const [answerIsRight, answersIds] = dataValidUtils.checkRightAnswers(answerData, question.options);
-    // Make answer data valid
-    await aService.addAnswer(user.id, question.id, answersIds);
 
-    if (answerIsRight) 
+    if (answerDataValid)
+        await aService.addAnswer(user.id, question.id, answersIds);
+
+    if (answerIsRight && answerDataValid) 
         await render("/pages/quiz/results.eta", { 
             correct: true,
             topic_id: question.topic_id,
