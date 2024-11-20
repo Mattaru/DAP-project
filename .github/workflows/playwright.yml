@@ -34,4 +34,4 @@ jobs:
             docker compose rm -sf e2e-playwright
 
       - name: Stop Docker services
-        run: docker-compose down --remove-orphans
+        run: docker compose down --remove-orphans
