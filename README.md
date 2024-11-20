@@ -119,6 +119,9 @@ The database comes preloaded with an admin account:
 
 ## Testing
 
+We have a github/workflows for automated module/e2e tests. But if you want,
+you can run it localy:
+
 ### deno tests
 
 You can run deno tests with command:
@@ -138,7 +141,7 @@ $ docker compose up --build -d
 ```
 When project was started you can run next command for tests:
 ```
-$ docker compose up -d drill-and-practice database && \ 
+$ E2E_TESTS_LOCAL=true docker compose up -d drill-and-practice database && \ 
   docker compose run --rm --entrypoint=npx e2e-playwright playwright test && \
   docker compose rm -sf e2e-playwright
 ```
