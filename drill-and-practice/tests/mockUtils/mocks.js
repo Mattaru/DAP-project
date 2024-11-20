@@ -18,6 +18,9 @@ export const getMockAppWithRouter = (method, path, func) => {
 
 export const mockAnswerService = {
   randomAnswersCount: Math.random(),
+  addAnswer() {
+    return null;
+  },
   getAnswersCount() {
     return this.randomAnswersCount;
   },
@@ -31,14 +34,38 @@ export const mockQuestionService = {
     question_text: `Text ${Math.random()}`,
   },
   randomQuestionsCount: Math.random(),
-  addQuestion() {return null;},
+  addQuestion() {
+    return null;
+  },
   getQuestionsCount() { 
     return this.randomQuestionsCount;
+  },
+  getQuestionWithOptionsById() {
+    return {
+      id: this.randomQuestion.id,
+      topic_id: mockTopicService.randomTopic.id,
+      question_text: this.randomQuestion.question_text,
+      options: [
+        { id: 1, option_text: "Opt 1", is_correct: false },
+        { id: 2, option_text: "Opt 2", is_correct: false },
+        { id: 3, option_text: "Opt 3", is_correct: true },
+        { id: 4, option_text: "Opt 4", is_correct: false }
+      ]
+    };
+  },
+  getRandomQuestionByTopicId() {
+    return this.randomQuestion;
   },
   findQuestionById() {
     return this.randomQuestion;
   },
   findAllQuestinsByTopicId() {
+    return this.randomQuestion;
+  },
+  retunNull() {
+    return null;
+  },
+  retunRandomQuestion() {
     return this.randomQuestion;
   },
 };
@@ -56,8 +83,12 @@ export const mockQuestionOptionsService = {
   findAllByQuestionId() {
     return this.randomQOption;
   },
-  removeById() {return null},
-  returnNull() {return null;},
+  removeById() {
+    return null
+  },
+  returnNull() {
+    return null;
+  },
   returnRandomQOption() {
     return this.randomQOption;
   },
@@ -88,8 +119,12 @@ export const mockTopicService = {
   returnRandomTopic() {
     return this.randomTopic;
   },
-  returnNull() {return null;},
-  removeTopic() {return null;},
+  returnNull() {
+    return null;
+  },
+  removeTopic() {
+    return null;
+  },
 };
 
 export const mockUsers = {
