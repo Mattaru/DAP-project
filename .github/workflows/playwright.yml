@@ -28,11 +28,9 @@ jobs:
       - name: Build and start all services
         run: docker compose up --build -d
 
-      
-
       - name: Run Playwright tests
-        run: docker compose up -d drill-and-practice database && \ 
-            docker compose run --rm --entrypoint=npx e2e-playwright playwright test && \
+        run: |
+            docker compose run --rm --entrypoint=npx e2e-playwright playwright test 
             docker compose rm -sf e2e-playwright
 
       - name: Stop Docker services
