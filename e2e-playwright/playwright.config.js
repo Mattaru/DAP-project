@@ -4,7 +4,7 @@ module.exports = {
   reporter: "list",
   workers: 5,
   use: {
-    baseURL: "http://host.docker.internal:7777",
+    baseURL: "http://drill-and-practice:7777",
     headless: true,
     ignoreHTTPSErrors: true,
   },

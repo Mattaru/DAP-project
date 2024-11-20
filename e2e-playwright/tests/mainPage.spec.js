@@ -3,7 +3,6 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Main Page.", () => {
   test.beforeEach(async ({ page }) => {
-    console.log(page.url);
     await page.goto("/");
   });
 
