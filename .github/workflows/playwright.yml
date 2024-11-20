@@ -31,7 +31,7 @@ jobs:
       
 
       - name: Run Playwright tests
-        run: $ docker compose up -d drill-and-practice database && \ 
+        run: docker compose up -d drill-and-practice database && \ 
             docker compose run --rm --entrypoint=npx e2e-playwright playwright test && \
             docker compose rm -sf e2e-playwright
 
