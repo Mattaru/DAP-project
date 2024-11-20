@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and start all services
-        run: docker-compose up --build -d
+        run: docker compose up --build -d
 
       - name: Wait for application to be ready
         run: |
