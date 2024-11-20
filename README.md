@@ -124,13 +124,9 @@ you can run it localy:
 
 ### deno tests
 
-You can run deno tests with command:
+You can run deno tests with command (we declearing global var `DENO_TEST=true` from start):
 ```
 $ DENO_TEST=true deno test -A
-```
-Or first of all declare global env variable `DENO_TEST=true` and then run command:
-```
-$ deno test -A
 ```
 
 ### e2e playwright tests
@@ -139,7 +135,7 @@ For runin test ensure that project is up, for it you can run command:
 ```
 $ docker compose up --build -d
 ```
-When project was started you can run next command for tests:
+When project was started you can run next command for tests (we declearing global var `E2E_TESTS_LOCAL=true` from start):
 ```
 $ E2E_TESTS_LOCAL=true docker compose up -d drill-and-practice database && \ 
   docker compose run --rm --entrypoint=npx e2e-playwright playwright test && \
