@@ -50,9 +50,13 @@ export const mockQuestionOptionsService = {
     option_text: `Option ${Math.random()}`,
     is_correct: false,
   },
+  addMultipleQuestionOptions() {
+    return null;
+  },
   findAllByQuestionId() {
     return this.randomQOption;
   },
+  removeById() {return null},
   returnNull() {return null;},
   returnRandomQOption() {
     return this.randomQOption;

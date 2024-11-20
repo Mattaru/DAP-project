@@ -22,8 +22,8 @@ export const addQuestionOption = async ({ params, request, response, render }, n
     }
 };
 
-export const deleteQuestionOption = async ({ params, response }) => {
-    await questionOptionService.removeById(params.oId);
+export const deleteQuestionOption = async ({ params, response }, next={}, service=questionOptionService) => {
+    await service.removeById(params.oId);
 
     response.redirect(`/topics/${params.id}/questions/${params.qId}`);
 };
