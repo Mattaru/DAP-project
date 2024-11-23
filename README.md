@@ -21,7 +21,8 @@ This is a web application for repeated practice of learned content through multi
 
 ## Overview
 
-This project is a web application built using a three-tier architecture (client, server, database) and a layered architecture (views, controllers, services, database). It is developed with **Deno** and **Oak** framework. The application uses **PostgreSQL** as the database and **Flyway** for database migrations.
+This project is a web application built using a three-tier architecture (client, server, database) and a layered architecture (apis, views, controllers, services, utils, database). It is developed with **Deno** and **Oak** framework. The application uses **PostgreSQL** as the database and **Flyway** for database migrations. 
+Project using CI/CD princips (modul tests and e2e tests on GitHub and if all of it OK - deploying to the Render). 
 
 ## Features
 
@@ -48,9 +49,11 @@ This project is a web application built using a three-tier architecture (client,
 ## Project Structure
 
 The project follows a modular structure:
+- **apis/**: Handles request and response logic for API.
 - **controllers/**: Handles request and response logic.
 - **services/**: Database queries.
 - **database/**: Connection handling.
+- **utils/**: Handlers/validators and other calculations.
 - **views/**: Templates and rendering logic.
 
 ## Configurations
@@ -119,7 +122,7 @@ The database comes preloaded with an admin account:
 
 ## Testing
 
-We have a github/workflows for automated module/e2e tests. But if you want,
+App using github/workflows for automated module/e2e tests. But if you want,
 you can run it localy:
 
 ### deno tests
@@ -144,4 +147,5 @@ $ E2E_TESTS_LOCAL=true && \
 
 ## Deployment
 
---- Not ready yet ---
+Live demo you can see [here](https://dap-project.onrender.com). Should be work till Dec 23/24. 
+(If demo not working - free db on the render was died).

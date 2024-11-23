@@ -1,24 +1,18 @@
 import { Pool } from "../deps.js";
+import * as config from "../config/config.js";
 
 
-const DAP_DB_URL = Deno.env.get("DAP_DB_URL");
-const DATABASE_URL = Deno.env.get("DATABASE_URL");
-const DENO_TEST = Deno.env.get("DENO_TEST");
-const FLYWAY_URL = Deno.env.get("FLYWAY_URL");
-const PRODUCTION = Deno.env.get("PRODUCTION");
-
-const CONCURRENT_CONNECTIONS = 10;
 let connectionPool;
 
-if (PRODUCTION) {
-  connectionPool = new Pool(DAP_DB_URL, CONCURRENT_CONNECTIONS, true);
-} else if (!DENO_TEST && !PRODUCTION) {
-  if (DATABASE_URL) 
-    connectionPool = new Pool(DATABASE_URL,CONCURRENT_CONNECTIONS, true);
-  else if (FLYWAY_URL) 
-    connectionPool = new Pool(FLYWAY_URL, CONCURRENT_CONNECTIONS, true);
+if (config.PRODUCTION) {
+  connectionPool = new Pool(config.DAP_DB_URL, config.CONCURRENT_CONNECTIONS, true);
+} else if (!config.DENO_TEST) {
+  if (config.DATABASE_URL) 
+    connectionPool = new Pool(config.DATABASE_URL, config.CONCURRENT_CONNECTIONS, true);
+  else if (config.FLYWAY_URL) 
+    connectionPool = new Pool(config.FLYWAY_URL, config.CONCURRENT_CONNECTIONS, true);
   else
-    connectionPool = new Pool({}, CONCURRENT_CONNECTIONS, true);  
+    connectionPool = new Pool({}, config.CONCURRENT_CONNECTIONS, true);  
 }
 
 export const executeQuery = async (query, params) => {
