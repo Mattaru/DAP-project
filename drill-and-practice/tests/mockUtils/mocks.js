@@ -143,11 +143,13 @@ export const mockUsers = {
 }; 
 
 export const mockUserService = {
+  randomEmail: `${Math.random()}@pepega.com`,
   randomPassword: `${Math.random()}`,
   randomUser: {
       id: Math.random(),
       email: `${Math.random()}@test.com`,
-      password: null,
+      password: "$2a$10$iSj2XeRx.hQamv9PaCKdgeII3OBb37x9bfvwX2qYndwxQ9lxMdCR2",
+      passswordNotHashed: "1234"
   },
   addUser(email, hashedPassword) {
     return { email, hashedPassword };
@@ -155,6 +157,12 @@ export const mockUserService = {
   findUser() {
     return this.randomUser;
   },
+  returnNull() {
+    return null;
+  },
+  returnRandomUser() {
+    return this.randomUser;
+  }
 };
 
 export const mockRender = (ctx, view, data) => {

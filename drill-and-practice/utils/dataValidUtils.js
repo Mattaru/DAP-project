@@ -118,7 +118,7 @@ export const userLoginValid = async (userData, user) => {
     userData,
     userLoginValidationRules,
   );
-
+  
   if (passes) {
     if (!user) {
       errors.email = {userNotExist: "user with this email address does not exist"}
@@ -136,7 +136,7 @@ export const userLoginValid = async (userData, user) => {
     }
   }
 
-  return [passes, errors, user];
+  return [passes, errors];
 };
 
 const userRegisterValidationRules = {

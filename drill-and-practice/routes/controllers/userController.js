@@ -7,14 +7,14 @@ import * as userService from "../../services/userService.js";
 export const login = async ({ request, response, render, state }, next={}, service=userService) => {
     const userData = await requestUtils.getData(request, {type: "form"});
     const userFromDb = await service.findUser(userData.email);
-    const [passes, errors, user] = await dataValidUtils.userLoginValid(userData, userFromDb);
+    const [passes, errors] = await dataValidUtils.userLoginValid(userData, userFromDb);
     
     if (!passes) {
         userData.validationErrors = errors;
 
         await render("./pages/users/login.eta", userData);
     } else {
-        await state.session.set("user", user);
+        await state.session.set("user", {email: userData.email});
 
         response.redirect("/topics");
     }
