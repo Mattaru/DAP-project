@@ -7,7 +7,7 @@ export const CORS = {
             "https://your-frontend-production-url.com", // Production frontend
             // Add any other origins you want to allow
         ];
-        const requestOrigin = ctx.request.headers.get("origin") || "";
+        const requestOrigin = ctx.request.headers?.get("origin") || "";
 
         if (allowedOrigins.includes(requestOrigin)) {
             return requestOrigin; // Return the origin for allowed origins (with credentials)
@@ -17,7 +17,7 @@ export const CORS = {
     },
     methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"], // Allow common methods
     allowedHeaders: ["Content-Type", "Authorization"], // Allow common headers
-    credentials: false, // Disallow credentials (cookies, etc.) by default
+    credentials: true, // Allow credentials (cookies, etc.)
     preflightContinue: false, // End preflight requests with a simple response
     optionsSuccessStatus: 204, // Standard success status for preflight requests
 };
