@@ -1,23 +1,10 @@
 // API.
 // Cross-Origin Resource Sharing settings for your API
 export const CORS = {
-    origin: (ctx) => {
-        const allowedOrigins = [
-            "http://127.0.0.1:5173", // Local dev frontend
-            "https://your-frontend-production-url.com", // Production frontend
-            // Add any other origins you want to allow
-        ];
-        const requestOrigin = ctx.request.headers?.get("origin") || "";
-
-        if (allowedOrigins.includes(requestOrigin)) {
-            return requestOrigin; // Return the origin for allowed origins (with credentials)
-        }
-    
-        return "*"; // For other origins, allow all but without credentials
-    },
+    origin: "*",
     methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"], // Allow common methods
     allowedHeaders: ["Content-Type", "Authorization"], // Allow common headers
-    credentials: true, // Allow credentials (cookies, etc.)
+    credentials: false, // Allow credentials (cookies, etc.)
     preflightContinue: false, // End preflight requests with a simple response
     optionsSuccessStatus: 204, // Standard success status for preflight requests
 };
