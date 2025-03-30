@@ -4,3 +4,5 @@ drill-and-practice-cache/npm/**
 drill-and-practice-cache/**
 .idea
 .vscode
+
+node_modules
